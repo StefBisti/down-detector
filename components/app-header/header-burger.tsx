@@ -1,7 +1,5 @@
-"use client";
-
-import Link from "next/link";
-import { useState } from "react";
+import { ChevronDown, Languages, Menu, Sun } from "lucide-react";
+import { Button } from "../ui/button";
 import {
   Sheet,
   SheetClose,
@@ -9,55 +7,29 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "./ui/sheet";
-import { Button } from "./ui/button";
-import { ChevronDown, Languages, Menu, Sun } from "lucide-react";
-import { Separator } from "./ui/separator";
+} from "../ui/sheet";
+import { Separator } from "../ui/separator";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
+} from "../ui/collapsible";
+import Link from "next/link";
+import { countries, Country } from "@/lib/countries";
+import CountryPicker from "./country-picker";
+import { useState } from "react";
 
-export default function AppHeader() {
-  const [hamburgerOpen, setHamburgerOpen] = useState(false);
-
-  return (
-    <header className="bg-background sticky top-0 z-50">
-      <div className="h-16 max-w-6xl flex items-center justify-start gap-4 px-4">
-        <HeaderSheet
-          hamburgerOpen={hamburgerOpen}
-          setHamburgerOpen={setHamburgerOpen}
-          languages={["English", "Spanish", "Portugeese"]}
-        />
-        <Link href="/">
-          <span className="tracking-wide font-heading text-primary font-black text-2xl">
-            Down
-          </span>
-          <span className="tracking-wide font-heading font-black text-2xl">
-            detector
-          </span>
-        </Link>
-
-        <nav className="hidden md:ml-auto md:flex md:items-center md:gap-8">
-          Hello there
-        </nav>
-      </div>
-    </header>
-  );
-}
-
-type HeaderSheetProps = {
+type HeaderBurgerProps = {
   hamburgerOpen: boolean;
   setHamburgerOpen: (v: boolean) => void;
   languages: string[];
 };
 
-function HeaderSheet({
+export default function HeaderBurger({
   hamburgerOpen,
   setHamburgerOpen,
   languages,
-}: HeaderSheetProps) {
+}: HeaderBurgerProps) {
   return (
     <Sheet open={hamburgerOpen} onOpenChange={setHamburgerOpen}>
       <SheetTrigger
@@ -109,27 +81,7 @@ function HeaderSheet({
         </SheetHeader>
         <Separator />
 
-        <Collapsible className="w-full">
-          <CollapsibleTrigger
-            render={
-              <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start text-base font-semibold hover:bg-foreground/8">
-                <Languages className="size-5" />
-                English
-                <ChevronDown className="ml-auto size-5 in-data-panel-open:rotate-180" />
-              </Button>
-            }
-          />
-          <CollapsibleContent className="flex flex-col gap-0">
-            {languages.map((lang, i) => (
-              <Button
-                className="rounded-none bg-foreground/3 border-none w-full h-auto pl-10 py-3 my-0 justify-start hover:bg-foreground/8"
-                key={i}
-              >
-                {lang}
-              </Button>
-            ))}
-          </CollapsibleContent>
-        </Collapsible>
+        <CountryPart countries={countries} />
 
         <Separator />
 
@@ -172,5 +124,31 @@ function HeaderSheet({
         <Separator />
       </SheetContent>
     </Sheet>
+  );
+}
+
+function CountryPart({ countries }: { countries: Country[] }) {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(countries[0]);
+
+  return (
+    <Collapsible className="w-full" open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger
+        render={
+          <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start gap-3 text-base font-semibold hover:bg-foreground/8">
+            <span className={`fi fi-${selected.code} rounded-xs w-5 h-5`} />
+            {selected.name}
+            <ChevronDown className="ml-auto size-5 in-data-panel-open:rotate-180" />
+          </Button>
+        }
+      />
+      <CollapsibleContent className="flex flex-col gap-0">
+        <CountryPicker
+          countries={countries}
+          setOpen={setOpen}
+          setSelected={setSelected}
+        />
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
