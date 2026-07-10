@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Allow phones on the LAN to use the dev server (update if the Mac's IP changes)
+  allowedDevOrigins: ["192.168.100.83"],
 };
 
 export default nextConfig;
