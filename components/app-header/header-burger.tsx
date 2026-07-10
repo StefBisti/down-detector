@@ -1,4 +1,4 @@
-import { ChevronDown, Languages, Menu, Sun } from "lucide-react";
+import { ChevronDown, Languages, Menu } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Sheet,
@@ -15,20 +15,30 @@ import {
   CollapsibleTrigger,
 } from "../ui/collapsible";
 import Link from "next/link";
-import { countries, Country } from "@/lib/countries";
+import type { Country, Language } from "@/lib/countries";
 import CountryPicker from "./country-picker";
 import { useState } from "react";
+import LanguagePicker from "./language-picker";
+import ThemeButton from "./theme-button";
 
 type HeaderBurgerProps = {
   hamburgerOpen: boolean;
   setHamburgerOpen: (v: boolean) => void;
-  languages: string[];
+  allCountries: Country[];
+  selectedCountry: Country;
+  setSelectedCountry: (c: Country) => void;
+  selectedLanguage: Language;
+  setSelectedLanguage: (l: Language) => void;
 };
 
 export default function HeaderBurger({
   hamburgerOpen,
   setHamburgerOpen,
-  languages,
+  allCountries,
+  selectedCountry,
+  setSelectedCountry,
+  selectedLanguage,
+  setSelectedLanguage,
 }: HeaderBurgerProps) {
   return (
     <Sheet open={hamburgerOpen} onOpenChange={setHamburgerOpen}>
@@ -37,7 +47,7 @@ export default function HeaderBurger({
           <Button
             variant="ghost"
             size="icon-lg"
-            className="md:hidden"
+            className="header:hidden"
             aria-label="Open menu"
           >
             <Menu className="size-5" />
@@ -46,7 +56,7 @@ export default function HeaderBurger({
       />
       <SheetContent
         side="left"
-        className="w-72 transition-none gap-0"
+        className="w-72 transition-none gap-0 max-[28rem]:w-full!"
         showCloseButton={false}
       >
         <SheetHeader className="h-16 gap-4 flex-row items-center">
@@ -55,14 +65,14 @@ export default function HeaderBurger({
               <Button
                 variant="ghost"
                 size="icon-lg"
-                className="md:hidden"
-                aria-label="Open menu"
+                className="header:hidden"
+                aria-label="Close menu"
               >
                 <Menu className="size-5" />
               </Button>
             }
           />
-          <SheetTitle className="text-left">
+          <SheetTitle className="text-left max-[20rem]:sr-only">
             <span className="tracking-wide font-heading text-primary font-black text-2xl">
               Down
             </span>
@@ -70,44 +80,31 @@ export default function HeaderBurger({
               detector
             </span>
           </SheetTitle>
-          <Button
-            variant="outline"
-            size="icon-lg"
-            className="ml-auto"
-            aria-label="Toggle light mode"
-          >
-            <Sun className="size-5" />
-          </Button>
+          <div className="ml-auto">
+            <ThemeButton />
+          </div>
         </SheetHeader>
         <Separator />
 
-        <CountryPart countries={countries} />
+        <CountrySelector
+          allCountries={allCountries}
+          selectedCountry={selectedCountry}
+          setSelectedCountry={setSelectedCountry}
+        />
 
         <Separator />
 
-        <Collapsible className="w-full">
-          <CollapsibleTrigger
-            render={
-              <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start text-base hover:bg-foreground/8">
-                <Languages className="size-5" />
-                English
-                <ChevronDown className="ml-auto size-5 in-data-panel-open:rotate-180" />
-              </Button>
-            }
-          />
-          <CollapsibleContent className="flex flex-col gap-0">
-            {languages.map((lang, i) => (
-              <Button
-                className="rounded-none bg-foreground/3 border-none w-full h-auto pl-10 py-3 my-0 justify-start hover:bg-foreground/8"
-                key={i}
-              >
-                {lang}
-              </Button>
-            ))}
-          </CollapsibleContent>
-        </Collapsible>
+        {selectedCountry.languages.length > 1 && (
+          <>
+            <LanguageSelector
+              possibleLanguages={selectedCountry.languages}
+              selectedLanguage={selectedLanguage}
+              setSelectedLanguage={setSelectedLanguage}
+            />
+            <Separator />
+          </>
+        )}
 
-        <Separator />
         <Link
           href="/for-business"
           className="px-4 py-3 text-base hover:bg-foreground/8"
@@ -127,26 +124,72 @@ export default function HeaderBurger({
   );
 }
 
-function CountryPart({ countries }: { countries: Country[] }) {
+function CountrySelector({
+  allCountries,
+  selectedCountry,
+  setSelectedCountry,
+}: {
+  allCountries: Country[];
+  selectedCountry: Country;
+  setSelectedCountry: (l: Country) => void;
+}) {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(countries[0]);
 
   return (
     <Collapsible className="w-full" open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger
         render={
-          <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start gap-3 text-base font-semibold hover:bg-foreground/8">
-            <span className={`fi fi-${selected.code} rounded-xs w-5 h-5`} />
-            {selected.name}
+          <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start gap-3 text-base font-semibold text-foreground hover:bg-foreground/8">
+            <span
+              className={`fi fi-${selectedCountry.code} rounded-xs w-5 h-5`}
+            />
+            {selectedCountry.name}
             <ChevronDown className="ml-auto size-5 in-data-panel-open:rotate-180" />
           </Button>
         }
       />
       <CollapsibleContent className="flex flex-col gap-0">
         <CountryPicker
-          countries={countries}
+          countries={allCountries}
           setOpen={setOpen}
-          setSelected={setSelected}
+          setSelected={setSelectedCountry}
+        />
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
+function LanguageSelector({
+  possibleLanguages,
+  selectedLanguage,
+  setSelectedLanguage,
+}: {
+  possibleLanguages: Language[];
+  selectedLanguage: Language;
+  setSelectedLanguage: (l: Language) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Collapsible className="w-full" open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger
+        render={
+          <Button
+            className="w-full h-auto px-4 py-3 justify-start gap-3
+            rounded-none border-none
+            bg-transparent text-base text-foreground font-semibold hover:bg-foreground/8"
+          >
+            <Languages className="size-5" />
+            {selectedLanguage.name}
+            <ChevronDown className="ml-auto size-5 in-data-panel-open:rotate-180" />
+          </Button>
+        }
+      />
+      <CollapsibleContent className="flex flex-col gap-0">
+        <LanguagePicker
+          possibleLanguages={possibleLanguages}
+          setOpen={setOpen}
+          setSelected={setSelectedLanguage}
         />
       </CollapsibleContent>
     </Collapsible>

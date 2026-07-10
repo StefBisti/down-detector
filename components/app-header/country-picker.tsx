@@ -17,9 +17,9 @@ export default function CountryPicker({
   setSelected: (c: Country) => void;
 }) {
   return (
-    <Command>
+    <Command className="p-0">
       <CommandInput placeholder="Search countries ..." />
-      <CommandList>
+      <CommandList className="mt-3">
         <CommandEmpty>No countries found</CommandEmpty>
         {countries.map((c) => (
           <CommandItem
@@ -30,7 +30,9 @@ export default function CountryPicker({
               setSelected(c);
               setOpen(false);
             }}
-            className="px-4 py-3 text-lg rounded-none border-none bg-transparent hover:bg-foreground/8"
+            className="px-4 py-3 gap-4 items-center
+              rounded-none border-none 
+              text-base data-[selected=true]:bg-foreground/8 data-[selected=false]:bg-foreground/3 bg-foreground/3"
           >
             <span className={`fi fi-${c.code} rounded-sm`} />
             {c.name}
