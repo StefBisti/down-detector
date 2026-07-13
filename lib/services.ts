@@ -16,7 +16,12 @@ export const services: Service[] = [
     name: "LinkedIn",
     logo: logo("linkedin.com"),
     description: "Professional networking and job search platform.",
-    problems: ["Feed not loading", "Can't send messages", "Login issues", "Job search broken"],
+    problems: [
+      "Feed not loading",
+      "Can't send messages",
+      "Login issues",
+      "Job search broken",
+    ],
   },
   {
     id: "513fbf5d-7113-480d-8027-a9cdaf4f0de5",
@@ -24,7 +29,11 @@ export const services: Service[] = [
     name: "Linktree",
     logo: logo("linktr.ee"),
     description: "Link-in-bio landing page tool for creators.",
-    problems: ["Page not loading", "Links redirect incorrectly", "Editor not saving"],
+    problems: [
+      "Page not loading",
+      "Links redirect incorrectly",
+      "Editor not saving",
+    ],
   },
   {
     id: "ce53f987-ff35-4bde-872e-7c11a2c5934f",
@@ -32,7 +41,11 @@ export const services: Service[] = [
     name: "Blink Charging",
     logo: logo("blinkcharging.com"),
     description: "Electric vehicle charging network and equipment.",
-    problems: ["Charger offline", "App can't start session", "Payment declined"],
+    problems: [
+      "Charger offline",
+      "App can't start session",
+      "Payment declined",
+    ],
   },
   {
     id: "7c1a8e65-9a80-41f2-bdd7-94a2c35318f0",
@@ -40,7 +53,12 @@ export const services: Service[] = [
     name: "Spotify",
     logo: logo("spotify.com"),
     description: "Music and podcast streaming service.",
-    problems: ["Songs won't play", "App keeps crashing", "Search not working", "Offline downloads missing"],
+    problems: [
+      "Songs won't play",
+      "App keeps crashing",
+      "Search not working",
+      "Offline downloads missing",
+    ],
   },
   {
     id: "113becea-c489-4774-952e-57037eb14096",
@@ -48,7 +66,12 @@ export const services: Service[] = [
     name: "YouTube",
     logo: logo("youtube.com"),
     description: "Video sharing and streaming platform.",
-    problems: ["Videos buffering", "Comments not loading", "Upload stuck", "Playback error"],
+    problems: [
+      "Videos buffering",
+      "Comments not loading",
+      "Upload stuck",
+      "Playback error",
+    ],
   },
   {
     id: "bb57ceb3-e405-4ef7-979c-e480b9613ca1",
@@ -56,7 +79,12 @@ export const services: Service[] = [
     name: "Call of Duty",
     logo: logo("callofduty.com"),
     description: "Online multiplayer first-person shooter franchise.",
-    problems: ["Can't connect to servers", "Matchmaking stuck", "High ping / lag", "Game crashes on launch"],
+    problems: [
+      "Can't connect to servers",
+      "Matchmaking stuck",
+      "High ping / lag",
+      "Game crashes on launch",
+    ],
   },
   {
     id: "3c7f15b7-43f0-4ec1-93cd-89718c723b07",
@@ -64,7 +92,12 @@ export const services: Service[] = [
     name: "X (Twitter)",
     logo: logo("x.com"),
     description: "Social media platform for short posts and news.",
-    problems: ["Timeline not refreshing", "Can't post", "DMs not sending", "Media won't load"],
+    problems: [
+      "Timeline not refreshing",
+      "Can't post",
+      "DMs not sending",
+      "Media won't load",
+    ],
   },
   {
     id: "47cefbc6-6edd-4be3-b557-4c3b3b2b1b0d",
@@ -72,7 +105,12 @@ export const services: Service[] = [
     name: "Claude AI",
     logo: logo("claude.ai"),
     description: "AI assistant by Anthropic for chat and coding.",
-    problems: ["Responses not loading", "Capacity constraints", "Login issues", "API errors"],
+    problems: [
+      "Responses not loading",
+      "Capacity constraints",
+      "Login issues",
+      "API errors",
+    ],
   },
   {
     id: "2960fe3c-67af-4f4a-a509-e123804f5bd0",
@@ -80,7 +118,12 @@ export const services: Service[] = [
     name: "Optimum / Cablevision",
     logo: logo("optimum.com"),
     description: "Cable TV, internet, and phone provider.",
-    problems: ["Internet outage", "Slow speeds", "TV signal lost", "Router not connecting"],
+    problems: [
+      "Internet outage",
+      "Slow speeds",
+      "TV signal lost",
+      "Router not connecting",
+    ],
   },
   {
     id: "d2a82784-d37d-4bc3-aa31-8420c00def97",
@@ -88,7 +131,12 @@ export const services: Service[] = [
     name: "USPS",
     logo: logo("usps.com"),
     description: "United States Postal Service mail and package delivery.",
-    problems: ["Tracking not updating", "Website down", "Package delayed", "Can't schedule pickup"],
+    problems: [
+      "Tracking not updating",
+      "Website down",
+      "Package delayed",
+      "Can't schedule pickup",
+    ],
   },
   {
     id: "eb1e98d7-7f56-459f-9f24-495d3d369af7",
@@ -96,7 +144,11 @@ export const services: Service[] = [
     name: "Samsung",
     logo: logo("samsung.com"),
     description: "Electronics maker: phones, TVs, and appliances.",
-    problems: ["SmartThings not responding", "Account login issues", "Software update failing"],
+    problems: [
+      "SmartThings not responding",
+      "Account login issues",
+      "Software update failing",
+    ],
   },
   {
     id: "0c0bc7f7-32f3-4820-ad7b-c94713c3f2c2",
@@ -104,7 +156,12 @@ export const services: Service[] = [
     name: "Steam",
     logo: logo("steampowered.com"),
     description: "PC gaming store, library, and community.",
-    problems: ["Store not loading", "Downloads stuck", "Friends list offline", "Can't launch games"],
+    problems: [
+      "Store not loading",
+      "Downloads stuck",
+      "Friends list offline",
+      "Can't launch games",
+    ],
   },
   {
     id: "acdf04c2-dc81-43d6-81cf-5960e2deeecc",
@@ -112,7 +169,12 @@ export const services: Service[] = [
     name: "Discord",
     logo: logo("discord.com"),
     description: "Voice, video, and text chat for communities.",
-    problems: ["Messages not sending", "Voice chat cutting out", "Can't connect", "Server outage"],
+    problems: [
+      "Messages not sending",
+      "Voice chat cutting out",
+      "Can't connect",
+      "Server outage",
+    ],
   },
   {
     id: "5676993f-bffd-4b9f-a237-9509bed1e377",
@@ -120,7 +182,12 @@ export const services: Service[] = [
     name: "Netflix",
     logo: logo("netflix.com"),
     description: "Subscription video streaming service.",
-    problems: ["Playback error", "App won't open", "Buffering constantly", "Login issues"],
+    problems: [
+      "Playback error",
+      "App won't open",
+      "Buffering constantly",
+      "Login issues",
+    ],
   },
   {
     id: "46305af1-d3ac-4250-9d2a-022e1ad345cb",
@@ -128,7 +195,12 @@ export const services: Service[] = [
     name: "Instagram",
     logo: logo("instagram.com"),
     description: "Photo and video sharing social network.",
-    problems: ["Feed not loading", "Stories won't post", "DMs broken", "Account locked out"],
+    problems: [
+      "Feed not loading",
+      "Stories won't post",
+      "DMs broken",
+      "Account locked out",
+    ],
   },
   {
     id: "1f789024-55cd-4444-9c17-b7bde47f58c2",
@@ -136,7 +208,12 @@ export const services: Service[] = [
     name: "Facebook",
     logo: logo("facebook.com"),
     description: "Social networking platform by Meta.",
-    problems: ["News feed blank", "Can't log in", "Messenger not connecting", "Pages not loading"],
+    problems: [
+      "News feed blank",
+      "Can't log in",
+      "Messenger not connecting",
+      "Pages not loading",
+    ],
   },
   {
     id: "e7c09635-2b47-4d7e-b2e0-0b1c9da835a1",
@@ -144,7 +221,12 @@ export const services: Service[] = [
     name: "WhatsApp",
     logo: logo("whatsapp.com"),
     description: "Encrypted messaging and calling app.",
-    problems: ["Messages not delivering", "Calls dropping", "Stuck on connecting", "Backup failing"],
+    problems: [
+      "Messages not delivering",
+      "Calls dropping",
+      "Stuck on connecting",
+      "Backup failing",
+    ],
   },
   {
     id: "22ea7574-685c-46ac-bbf1-9bdfea6f0f14",
@@ -152,7 +234,12 @@ export const services: Service[] = [
     name: "Gmail",
     logo: logo("gmail.com"),
     description: "Google's email service.",
-    problems: ["Emails not arriving", "Can't send mail", "Attachment errors", "Login loop"],
+    problems: [
+      "Emails not arriving",
+      "Can't send mail",
+      "Attachment errors",
+      "Login loop",
+    ],
   },
   {
     id: "3546e35d-3135-48d7-996d-6f8e408f6ce8",
@@ -160,7 +247,12 @@ export const services: Service[] = [
     name: "Google",
     logo: logo("google.com"),
     description: "Search engine and web services.",
-    problems: ["Search not loading", "Drive unavailable", "Maps not responding", "Account sign-in issues"],
+    problems: [
+      "Search not loading",
+      "Drive unavailable",
+      "Maps not responding",
+      "Account sign-in issues",
+    ],
   },
   {
     id: "56b5a8d3-de12-4cd0-b605-bcfbffc79133",
@@ -168,7 +260,12 @@ export const services: Service[] = [
     name: "Amazon",
     logo: logo("amazon.com"),
     description: "Online retail and cloud services giant.",
-    problems: ["Website down", "Checkout failing", "Orders not updating", "Prime Video buffering"],
+    problems: [
+      "Website down",
+      "Checkout failing",
+      "Orders not updating",
+      "Prime Video buffering",
+    ],
   },
   {
     id: "bc803c20-f690-42c3-969e-f8d344372453",
@@ -176,7 +273,12 @@ export const services: Service[] = [
     name: "PayPal",
     logo: logo("paypal.com"),
     description: "Online payments and money transfers.",
-    problems: ["Payment not going through", "Can't log in", "Transfer delayed", "App error"],
+    problems: [
+      "Payment not going through",
+      "Can't log in",
+      "Transfer delayed",
+      "App error",
+    ],
   },
   {
     id: "3436313e-0fc4-43b7-9ae2-0aea3989b18b",
@@ -184,7 +286,12 @@ export const services: Service[] = [
     name: "Reddit",
     logo: logo("reddit.com"),
     description: "Community forums and discussion boards.",
-    problems: ["Feed won't load", "Comments missing", "Can't post", "App crashing"],
+    problems: [
+      "Feed won't load",
+      "Comments missing",
+      "Can't post",
+      "App crashing",
+    ],
   },
   {
     id: "604042e4-3f73-4774-8c27-bb737f6b3ddf",
@@ -192,7 +299,12 @@ export const services: Service[] = [
     name: "TikTok",
     logo: logo("tiktok.com"),
     description: "Short-form video sharing platform.",
-    problems: ["Videos not loading", "Upload stuck", "For You page frozen", "Login issues"],
+    problems: [
+      "Videos not loading",
+      "Upload stuck",
+      "For You page frozen",
+      "Login issues",
+    ],
   },
   {
     id: "1331015e-9508-4d0b-b292-570734c0f5d6",
@@ -200,7 +312,12 @@ export const services: Service[] = [
     name: "Twitch",
     logo: logo("twitch.tv"),
     description: "Live streaming platform for gaming and more.",
-    problems: ["Streams buffering", "Chat not connecting", "Can't go live", "VODs unavailable"],
+    problems: [
+      "Streams buffering",
+      "Chat not connecting",
+      "Can't go live",
+      "VODs unavailable",
+    ],
   },
   {
     id: "47688b3d-2f88-4c5a-97a5-0b0d2782b870",
@@ -208,7 +325,12 @@ export const services: Service[] = [
     name: "Zoom",
     logo: logo("zoom.us"),
     description: "Video conferencing and online meetings.",
-    problems: ["Can't join meeting", "Audio cutting out", "Video freezing", "Login errors"],
+    problems: [
+      "Can't join meeting",
+      "Audio cutting out",
+      "Video freezing",
+      "Login errors",
+    ],
   },
   {
     id: "05808715-cffc-4ccd-8e68-51b4d201f679",
@@ -216,7 +338,12 @@ export const services: Service[] = [
     name: "GitHub",
     logo: logo("github.com"),
     description: "Code hosting and collaboration platform.",
-    problems: ["Git push failing", "Actions not running", "Pages down", "API errors"],
+    problems: [
+      "Git push failing",
+      "Actions not running",
+      "Pages down",
+      "API errors",
+    ],
   },
   {
     id: "3c76f759-6225-4541-a94c-57c77a670d51",
@@ -224,7 +351,12 @@ export const services: Service[] = [
     name: "Cloudflare",
     logo: logo("cloudflare.com"),
     description: "CDN, DNS, and web security provider.",
-    problems: ["522 connection timed out", "DNS not resolving", "Dashboard down", "Widespread site outages"],
+    problems: [
+      "522 connection timed out",
+      "DNS not resolving",
+      "Dashboard down",
+      "Widespread site outages",
+    ],
   },
   {
     id: "93d487dc-c3b8-4a43-9028-6b8f66b2d62b",
@@ -232,7 +364,12 @@ export const services: Service[] = [
     name: "Verizon",
     logo: logo("verizon.com"),
     description: "Mobile carrier and internet provider.",
-    problems: ["No signal", "Mobile data not working", "Calls dropping", "SOS mode stuck"],
+    problems: [
+      "No signal",
+      "Mobile data not working",
+      "Calls dropping",
+      "SOS mode stuck",
+    ],
   },
   {
     id: "e281295b-2581-44ed-8930-2c3c6787af65",
@@ -240,7 +377,12 @@ export const services: Service[] = [
     name: "AT&T",
     logo: logo("att.com"),
     description: "Telecommunications and wireless carrier.",
-    problems: ["Network outage", "Slow data speeds", "Text messages failing", "Fiber internet down"],
+    problems: [
+      "Network outage",
+      "Slow data speeds",
+      "Text messages failing",
+      "Fiber internet down",
+    ],
   },
   {
     id: "a7667dda-f874-4d58-8f5d-d49e6ec335f0",
@@ -248,6 +390,17 @@ export const services: Service[] = [
     name: "Roblox",
     logo: logo("roblox.com"),
     description: "Online game platform and creation system.",
-    problems: ["Can't join games", "Error code 277", "Avatar not loading", "Purchases failing"],
+    problems: [
+      "Can't join games",
+      "Error code 277",
+      "Avatar not loading",
+      "Purchases failing",
+    ],
   },
 ];
+
+const trendingSlugs = ["spotify", "optimum-cablevision", "usps", "x-twitter"];
+
+export const trending = trendingSlugs
+  .map((slug) => services.find((s) => s.slug === slug))
+  .filter((s) => s !== undefined);

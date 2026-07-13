@@ -3,52 +3,58 @@
 import { useRouter } from "next/navigation";
 import { Command as CommandPrimitive } from "cmdk";
 import { SearchIcon, XIcon, Clock, TrendingUp } from "lucide-react";
-
-import { Command, CommandList, CommandGroup } from "../ui/command";
+import { Command, CommandList, CommandGroup, CommandItem } from "../ui/command";
 import { InputGroup, InputGroupAddon } from "../ui/input-group";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import type { Service } from "@/lib/services";
 
-const services = [
-  "LinkedIn",
-  "Linktree",
-  "AtLink Services LLC",
-  "Blink Charging",
-  "Spotify",
-  "YouTube",
-  "Call of Duty",
-  "X (Twitter)",
-  "Claude AI",
-  "Optimum / Cablevision",
-  "USPS",
-  "Samsung",
-  "Steam",
-  "Discord",
-  "Netflix",
-  "Instagram",
-];
+function subscribeToStorage(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
 
-const recentSearches = ["Call of Duty", "YouTube", "X (Twitter)", "Claude AI"];
-const trendingSearches = [
-  "Spotify",
-  "Optimum / Cablevision",
-  "USPS",
-  "X (Twitter)",
-];
-
-export default function InputService() {
+export default function InputService({
+  services,
+  trendingSearches,
+}: {
+  services: Service[];
+  trendingSearches: Service[];
+}) {
   const [query, setQuery] = useState("");
   const router = useRouter();
   const showResults = query.length > 0;
   const results = services.filter((s) =>
-    s.toLowerCase().includes(query.toLowerCase()),
+    s.name.toLowerCase().includes(query.toLowerCase()),
   );
+
+  const recentJson = useSyncExternalStore(
+    subscribeToStorage,
+    () => localStorage.getItem("recentSearches") ?? "[]",
+    () => "[]",
+  );
+  const recentSlugs: string[] = JSON.parse(recentJson);
+
+  const recentSearches = recentSlugs
+    .map((slug) => services.find((s) => s.slug === slug))
+    .filter((s) => s !== undefined);
+
+  function selectService(s: Service) {
+    const next = [s.slug, ...recentSlugs.filter((x) => x !== s.slug)].slice(
+      0,
+      4,
+    );
+    localStorage.setItem("recentSearches", JSON.stringify(next));
+    // the storage event only fires in other tabs — notify this one manually
+    window.dispatchEvent(new StorageEvent("storage"));
+    router.push(`/status/${s.slug}`);
+  }
 
   return (
     <Command
       shouldFilter={false}
-      className="group mt-4 p-0 w-full max-w-2xl rounded-[28px]!"
+      className="group mt-4 p-0 w-full max-w-138 rounded-[28px]!"
     >
       <InputGroup className="h-12! px-2 gap-2 border-transparent bg-transparent! group-focus-within:bg-transparent!">
         <InputGroupAddon>
@@ -80,13 +86,14 @@ export default function InputService() {
           {showResults ? (
             <div className="flex flex-col">
               {results.map((item) => (
-                <Button
-                  key={item}
-                  onClick={() => router.push(`/status/${item}`)}
-                  className="pl-10 justify-start! bg-transparent hover:bg-muted rounded-[0.4rem] text-foreground"
+                <CommandItem
+                  key={item.id}
+                  value={item.slug}
+                  onSelect={() => selectService(item)}
+                  className="h-10 pl-6 justify-start! bg-transparent hover:bg-muted rounded-none text-foreground"
                 >
-                  {item}
-                </Button>
+                  {item.name}
+                </CommandItem>
               ))}
               {results.length === 0 && (
                 <div className="py-20 text-center">
@@ -107,13 +114,14 @@ export default function InputService() {
                 className="*:flex *:flex-col"
               >
                 {recentSearches.map((item) => (
-                  <Button
-                    key={item}
-                    onClick={() => router.push(`/status/${item}`)}
-                    className="pl-10 justify-start! bg-transparent hover:bg-muted rounded-[0.4rem] text-foreground"
+                  <CommandItem
+                    key={item.id}
+                    value={`recent-${item.slug}`}
+                    onSelect={() => selectService(item)}
+                    className="pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! rounded-[0.4rem]! text-foreground!"
                   >
-                    {item}
-                  </Button>
+                    {item.name}
+                  </CommandItem>
                 ))}
               </CommandGroup>
               <CommandGroup
@@ -125,13 +133,14 @@ export default function InputService() {
                 className="*:flex *:flex-col"
               >
                 {trendingSearches.map((item) => (
-                  <Button
-                    key={item}
-                    onClick={() => router.push(`/status/${item}`)}
-                    className="pl-10 justify-start! bg-transparent hover:bg-muted rounded-[0.4rem] text-foreground"
+                  <CommandItem
+                    key={item.id}
+                    value={`trending-${item.slug}`}
+                    onSelect={() => selectService(item)}
+                    className="pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! rounded-[0.4rem]! text-foreground!"
                   >
-                    {item}
-                  </Button>
+                    {item.name}
+                  </CommandItem>
                 ))}
               </CommandGroup>
             </div>
