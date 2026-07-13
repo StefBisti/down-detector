@@ -4,14 +4,14 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-[calc(100dvh-128px)] flex-col justify-center items-center gap-4 px-4 text-center">
+    <div className="flex min-h-[calc(100dvh-128px)] flex-col justify-center items-center gap-4 px-6 text-center mb-20">
       <h2 className="text-3xl font-black sm:text-4xl md:text-5xl">
         404 - Page not found
       </h2>
       <h3 className="text-base text-muted-foreground sm:text-lg">
-        The page you&apos;re looking for doesn&apos;t exist
+        The page you&apos;re looking for doesn&apos;t exist.
       </h3>
-      <div className="flex flex-col gap-3 w-full max-w-xs mt-4 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
+      <div className="flex flex-col items-center gap-3 w-full max-w-xs mt-4 sm:w-auto sm:max-w-none sm:flex-row sm:gap-4">
         <Button
           size="lg"
           render={<Link href="/" />}
