@@ -35,20 +35,7 @@ export default async function StatusPage({
         )}
       </div>
 
-      {/* Report a problem */}
-      <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-zinc-700">
-        <p className="flex items-center gap-3 text-3xl font-bold text-white">
-          Report a problem
-          <span className="grid size-8 place-items-center rounded-lg bg-primary text-xl font-bold text-white">
-            !
-          </span>
-        </p>
-        <p className="mt-2 text-lg text-zinc-300">Select which issue applies</p>
-
-        <div className="mt-10 w-full">
-          <ProblemSelector problems={service.problems} />
-        </div>
-      </div>
+      <ProblemSelector problems={service.problems} />
     </div>
   );
 }
