@@ -1,6 +1,7 @@
 import InputService from "@/components/home-page/input-service";
+import ServicePreview from "@/components/home-page/service-preview";
 import { Separator } from "@/components/ui/separator";
-import { services, trending } from "@/lib/services";
+import { demoReportData, services, trending } from "@/lib/services";
 import Image from "next/image";
 
 export default function Home() {
@@ -8,8 +9,8 @@ export default function Home() {
   const countriesCount = 72;
   const countryCode = "us";
   return (
-    <div className="mb-20 px-4 md:px-20 flex flex-col items-center relative">
-      <div className="w-screen overflow-hidden">
+    <div className="mb-20 px-4 md:px-20 flex flex-col items-center relative overflow-x-clip">
+      <div>
         <Image
           src="/sparkline.svg"
           alt=""
@@ -22,12 +23,12 @@ export default function Home() {
           alt=""
           width={850}
           height={318}
-          className="absolute top-0 -right-10 max-w-none md:hidden"
+          className="absolute top-0 -right-5 max-w-none md:hidden"
         />
       </div>
 
-      <h1 className="font-bold text-center mt-12 text-3xl md:text-5xl">
-        See outages in real-time
+      <h1 className="font-bold text-center mt-12 text-4xl md:text-5xl">
+        See outages in <span className="whitespace-nowrap">real-time</span>
       </h1>
 
       <div className="mt-12 flex flex-row gap-10">
@@ -44,10 +45,20 @@ export default function Home() {
         </div>
       </div>
 
-      <h2 className="mt-24 md:mt-40 text-base md:text-2xl font-semibold text-center">
+      <h2 className="mt-24 md:mt-40 text-lg md:text-2xl font-semibold text-center">
         Check if services are down or experiencing issues.
       </h2>
       <InputService services={services} trendingSearches={trending} />
+
+      <div className="mt-62 w-full grid grid-cols-2 auto-rows-50 gap-4 lg:max-w-5xl lg:grid-cols-3 lg:mx-auto">
+        {services.map((s) => (
+          <ServicePreview
+            key={s.id}
+            service={s}
+            data={demoReportData(s.slug)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
