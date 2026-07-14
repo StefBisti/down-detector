@@ -7,7 +7,6 @@ export type Service = {
   problems: string[];
 };
 
-
 // Deterministic (seeded by slug) so server and client render the same array.
 export function demoReportData(seed: string, points = 40): number[] {
   let h = 0;
@@ -100,7 +99,9 @@ export function demoComments(seed: string, count = 9): Comment[] {
   return Array.from({ length: count }, (_, i) => {
     hoursAgo += Math.floor(rand() * 5);
     return {
-      name: commenterNames[(i + Math.floor(rand() * 3)) % commenterNames.length],
+      name: commenterNames[
+        (i + Math.floor(rand() * 3)) % commenterNames.length
+      ],
       hoursAgo,
       text: commentTexts[Math.floor(rand() * commentTexts.length)],
     };

@@ -1,19 +1,19 @@
 import CommentsSection from "@/components/status/comments-section";
 import ProblemSelector from "@/components/status/problem-selector";
 import ReportsChart from "@/components/status/reports-chart";
-import { demoComments, demoHourlyReportData, services } from "@/lib/services";
+import { sql } from "@/lib/db";
+import { demoComments, demoHourlyReportData, Service } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-
-export function generateStaticParams() {
-  return services.map((s) => ({ slug: s.slug }));
-}
 
 export default async function StatusPage({
   params,
 }: PageProps<"/status/[slug]">) {
   const { slug } = await params;
+  const services =
+    (await sql`select slug, name, logo, description, possible_problems as problems from services`) as Service[];
+
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
