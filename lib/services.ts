@@ -24,6 +24,89 @@ export function demoReportData(seed: string, points = 40): number[] {
   });
 }
 
+export type ReportPoint = {
+  time: string;
+  reports: number;
+  baseline: number;
+};
+
+// Half-hourly points for the last 24 hours, seeded like demoReportData.
+export function demoHourlyReportData(
+  seed: string,
+  now = Date.now(),
+): ReportPoint[] {
+  let h = 0;
+  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) | 0;
+  const rand = () => {
+    h = (h * 1103515245 + 12345) | 0;
+    return ((h >>> 16) & 0x7fff) / 0x7fff;
+  };
+  const points = 48;
+  const dayMs = 24 * 60 * 60 * 1000;
+  const start = now - dayMs;
+  let baseline = 60 + rand() * 80;
+  return Array.from({ length: points }, (_, i) => {
+    const date = new Date(start + (i / points) * dayMs);
+    baseline = Math.min(180, Math.max(50, baseline + (rand() - 0.45) * 15));
+    const spike = rand() < 0.05 ? 60 + rand() * 120 : 0;
+    const reports = baseline + (rand() - 0.5) * 60 + spike;
+    return {
+      time: date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true }),
+      reports: Math.round(Math.max(5, reports)),
+      baseline: Math.round(baseline),
+    };
+  });
+}
+
+export type Comment = {
+  name: string;
+  hoursAgo: number;
+  text: string;
+};
+
+const commenterNames = [
+  "CJ",
+  "Emery Hayward",
+  "Brandy Peace",
+  "Marcus T",
+  "Elena Ruiz",
+  "Sam K",
+  "Dana Whitfield",
+  "Priya N",
+  "Jordan Lee",
+];
+
+const commentTexts = [
+  "Down due to an external power outage on Barna in Titusville FL. Says restore by 330am.",
+  "My router keeps going offline non stop in Hernando county FL area",
+  "Out due to a storm in the Rome ga area this is Tv/Internet and phone",
+  "Anyone else getting constant disconnects since this morning?",
+  "Been down for 2 hours in the Austin area. No ETA from support.",
+  "Works again for me after restarting the router twice.",
+  "Still down in Phoenix, support line is completely jammed.",
+  "Intermittent outages all evening in the Denver metro.",
+  "App says all good but nothing loads on my end.",
+];
+
+// Deterministic (seeded by slug) demo comments, oldest last.
+export function demoComments(seed: string, count = 9): Comment[] {
+  let h = 0;
+  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) | 0;
+  const rand = () => {
+    h = (h * 1103515245 + 12345) | 0;
+    return ((h >>> 16) & 0x7fff) / 0x7fff;
+  };
+  let hoursAgo = 1 + Math.floor(rand() * 4);
+  return Array.from({ length: count }, (_, i) => {
+    hoursAgo += Math.floor(rand() * 5);
+    return {
+      name: commenterNames[(i + Math.floor(rand() * 3)) % commenterNames.length],
+      hoursAgo,
+      text: commentTexts[Math.floor(rand() * commentTexts.length)],
+    };
+  });
+}
+
 export const services: Service[] = [
   {
     id: "776f18a7-4f8b-4183-8f70-59c21f861616",

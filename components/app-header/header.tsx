@@ -26,7 +26,7 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 backdrop-blur-sm bg-black/50">
       <div className="h-16 mx-auto max-w-10xl w-full flex items-center justify-start gap-4 px-4">
         <HeaderBurger
           hamburgerOpen={hamburgerOpen}
