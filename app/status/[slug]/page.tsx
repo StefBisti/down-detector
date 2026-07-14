@@ -1,7 +1,7 @@
+import CommentsSection from "@/components/status/comments-section";
 import ProblemSelector from "@/components/status/problem-selector";
 import ReportsChart from "@/components/status/reports-chart";
-import { Button } from "@/components/ui/button";
-import { demoHourlyReportData, services } from "@/lib/services";
+import { demoComments, demoHourlyReportData, services } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -37,7 +37,6 @@ export default async function StatusPage({
         )}
       </div>
 
-      {/* Reports in the last 24 hours */}
       <div className="container max-w-3xl overflow-hidden rounded-md bg-zinc-800">
         <div className="bg-zinc-700 px-8 py-5">
           <p className="text-xl font-semibold text-white">
@@ -54,6 +53,11 @@ export default async function StatusPage({
       </a>
 
       <ProblemSelector problems={service.problems} />
+
+      <CommentsSection
+        serviceName={service.name}
+        comments={demoComments(service.slug)}
+      />
     </div>
   );
 }
