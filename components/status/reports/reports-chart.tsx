@@ -39,9 +39,12 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
           tickMargin={10}
         />
         <YAxis
-          domain={[0, 400]}
-          ticks={[0, 100, 200, 300, 400]}
-          tickLine={false}
+          domain={[
+            0,
+            (dataMax: number) => Math.max(5, Math.ceil(dataMax * 1.25)),
+          ]}
+          allowDecimals={false}
+          tickLine={true}
           axisLine={{ stroke: "#a1a1aa" }}
           tick={{ fill: "#a1a1aa" }}
           width={40}

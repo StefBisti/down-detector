@@ -1,12 +1,40 @@
 import "server-only";
 import { sql } from "../db";
+import type { ReportPoint } from "../services";
 
-export async function getLatestReports(serviceId: number) {
-  const result = await sql`select count(*)::int as count
-    from reports
-    where service_id = ${serviceId}
-      and posted_at > now() - ${`1 day`}::interval`;
-  return result[0].count as number;
+export async function getHourlyReports(
+  serviceId: number,
+): Promise<ReportPoint[]> {
+  const rows = (await sql`
+    select bucket, count(r.id)::int as reports
+    from generate_series(
+      date_bin('30 minutes', now() - interval '24 hours', timestamptz 'epoch'),
+      date_bin('30 minutes', now(), timestamptz 'epoch'),
+      interval '30 minutes'
+    ) as bucket
+    left join reports r
+      on r.service_id = ${serviceId}
+      and date_bin('30 minutes', r.posted_at, timestamptz 'epoch') = bucket
+    group by bucket
+    order by bucket`) as { bucket: Date; reports: number }[];
+
+  const WINDOW = 6;
+
+  return rows.map((r, i) => {
+    const window = rows.slice(Math.max(0, i - WINDOW + 1), i + 1);
+    const baseline = Math.round(
+      window.reduce((sum, x) => sum + x.reports, 0) / window.length,
+    );
+    return {
+      time: new Date(r.bucket).toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }),
+      reports: r.reports,
+      baseline,
+    };
+  });
 }
 
 export async function addReport(

@@ -1,10 +1,11 @@
 import { reportProblem } from "@/app/actions";
 import CommentsSection from "@/components/status/comments-section/comments-section";
 import CommentsSectionSkeleton from "@/components/status/comments-section/comments-section-skeleton";
-import ProblemSelector from "@/components/status/problem-selector";
-import ReportsChart from "@/components/status/reports-chart";
+import ProblemSelector from "@/components/status/reports/problem-selector";
+import ReportsChart from "@/components/status/reports/reports-chart";
+import { getHourlyReports } from "@/lib/data/reports";
 import { sql } from "@/lib/db";
-import { demoHourlyReportData, Service } from "@/lib/services";
+import { deriveStatus, Service, ServiceStatus } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -20,6 +21,27 @@ export default async function StatusPage({
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
 
+  const points = await getHourlyReports(service.id);
+  const status = deriveStatus(points);
+
+  const statusUI: Record<
+    ServiceStatus,
+    { headline: string; className: string }
+  > = {
+    operational: {
+      headline: `User reports show no current problems with ${service.name}`,
+      className: "text-black",
+    },
+    possible: {
+      headline: `User reports indicate possible problems at ${service.name}`,
+      className: "text-amber-600",
+    },
+    down: {
+      headline: `User reports indicate problems at ${service.name}`,
+      className: "text-red-600",
+    },
+  };
+
   return (
     <div className="mb-20 mt-5 px-2 md:px-20 flex flex-col items-center gap-6">
       <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-white border-primary border-2">
@@ -30,8 +52,10 @@ export default async function StatusPage({
           height={200}
           className="flex-1 py-4 self-center h-12 w-auto"
         />
-        <h1 className="text-black text-3xl font-semibold text-center">
-          User reports show no current problems with {service.name}
+        <h1
+          className={`${statusUI[status].className} text-3xl font-semibold text-center`}
+        >
+          {statusUI[status].headline}
         </h1>
         {service.description.length > 0 && (
           <h2 className="mt-8 text-black/60 text-lg text-center">
@@ -47,7 +71,7 @@ export default async function StatusPage({
           </p>
         </div>
         <div className="px-4 pt-6 pb-2">
-          <ReportsChart data={demoHourlyReportData(service.slug)} />
+          <ReportsChart data={points} />
         </div>
       </div>
 

@@ -1,13 +1,14 @@
 import InputService from "@/components/home-page/input-service";
 import ServicePreview from "@/components/home-page/service-preview";
 import { Separator } from "@/components/ui/separator";
-import { demoReportData, services, trending } from "@/lib/services";
+import { demoReportData } from "@/lib/services";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
   const servicesCount = 35093;
   const countriesCount = 72;
   const countryCode = "us";
+
   return (
     <div className="mb-20 px-4 md:px-20 flex flex-col items-center relative overflow-x-clip">
       <div>

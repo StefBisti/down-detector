@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { Check } from "lucide-react";
 
 export default function ProblemSelector({

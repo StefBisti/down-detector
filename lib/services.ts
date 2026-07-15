@@ -35,32 +35,21 @@ export type ReportPoint = {
   baseline: number;
 };
 
-// Half-hourly points for the last 24 hours, seeded like demoReportData.
-export function demoHourlyReportData(
-  seed: string,
-  now = Date.now(),
-): ReportPoint[] {
-  let h = 0;
-  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) | 0;
-  const rand = () => {
-    h = (h * 1103515245 + 12345) | 0;
-    return ((h >>> 16) & 0x7fff) / 0x7fff;
-  };
-  const points = 48;
-  const dayMs = 24 * 60 * 60 * 1000;
-  const start = now - dayMs;
-  let baseline = 60 + rand() * 80;
-  return Array.from({ length: points }, (_, i) => {
-    const date = new Date(start + (i / points) * dayMs);
-    baseline = Math.min(180, Math.max(50, baseline + (rand() - 0.45) * 15));
-    const spike = rand() < 0.05 ? 60 + rand() * 120 : 0;
-    const reports = baseline + (rand() - 0.5) * 60 + spike;
-    return {
-      time: date.toLocaleTimeString("en-US", { hour: "numeric", hour12: true }),
-      reports: Math.round(Math.max(5, reports)),
-      baseline: Math.round(baseline),
-    };
-  });
+export type ServiceStatus = "operational" | "possible" | "down";
+const FLOOR_POSSIBLE = 3;
+const FLOOR_DOWN = 6;
+
+export function deriveStatus(points: ReportPoint[]): ServiceStatus {
+  if (points.length === 0) return "operational";
+
+  const avg = points.reduce((sum, p) => sum + p.reports, 0) / points.length;
+
+  const recent = points.slice(-3, -1);
+  const current = recent.length ? Math.max(...recent.map((p) => p.reports)) : 0;
+
+  if (current >= FLOOR_DOWN && current > avg * 2.5) return "down";
+  if (current >= FLOOR_POSSIBLE && current > avg * 1.5) return "possible";
+  return "operational";
 }
 
 // const trendingSlugs = ["spotify", "optimum-cablevision", "usps", "x-twitter"];
