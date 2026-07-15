@@ -1,18 +1,20 @@
 import CommentsSection from "@/components/status/comments-section";
+import CommentsSectionSkeleton from "@/components/status/comments-section-skeleton";
 import ProblemSelector from "@/components/status/problem-selector";
 import ReportsChart from "@/components/status/reports-chart";
 import { sql } from "@/lib/db";
-import { demoComments, demoHourlyReportData, Service } from "@/lib/services";
+import { demoHourlyReportData, Service } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 export default async function StatusPage({
   params,
 }: PageProps<"/status/[slug]">) {
   const { slug } = await params;
   const services =
-    (await sql`select slug, name, logo, description, possible_problems as problems from services`) as Service[];
+    (await sql`select id, slug, name, logo, description, possible_problems as problems from services`) as Service[];
 
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
@@ -54,10 +56,9 @@ export default async function StatusPage({
 
       <ProblemSelector problems={service.problems} />
 
-      <CommentsSection
-        serviceName={service.name}
-        comments={demoComments(service.slug)}
-      />
+      <Suspense fallback={<CommentsSectionSkeleton service={service} />}>
+        <CommentsSection service={service} />
+      </Suspense>
     </div>
   );
 }
