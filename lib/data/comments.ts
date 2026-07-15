@@ -18,7 +18,7 @@ export async function addComment(
   await sql`insert into messages (service_id, message, ip_hash) values (${serviceId}, ${message}, ${ipHash})`;
 }
 
-export async function reccentCommentCount(ipHash: string, seconds: number) {
+export async function recentCommentCount(ipHash: string, seconds: number) {
   const rows = await sql`
     select count(*)::int as count
     from messages

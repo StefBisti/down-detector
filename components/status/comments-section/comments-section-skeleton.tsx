@@ -1,6 +1,6 @@
 import { Service } from "@/lib/services";
-import { Separator } from "../ui/separator";
-import { Skeleton } from "../ui/skeleton";
+import { Separator } from "../../ui/separator";
+import { Skeleton } from "../../ui/skeleton";
 import { CommentsSectionShell } from "./comments-section-shell";
 
 export default function CommentsSectionSkeleton({

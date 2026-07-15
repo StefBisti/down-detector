@@ -1,9 +1,9 @@
 "use server";
 
-import { addComment, reccentCommentCount } from "@/lib/data/comments";
-import { hashIp } from "@/lib/rate-limit";
+import { addComment, recentCommentCount } from "@/lib/data/comments";
+import { addReport, recentReportCount } from "@/lib/data/reports";
+import { getIpHash } from "@/lib/rate-limit";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
 
 export async function postMessage(
   serviceId: number,
@@ -18,20 +18,42 @@ export async function postMessage(
     return { error: "Message must be between 1 and 1000 characters." };
   }
 
-  const h = await headers();
-  const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-  const ipHash = hashIp(ip);
-
-  if ((await reccentCommentCount(ipHash, 60)) >= 5) {
+  const ipHash = await getIpHash();
+  if ((await recentCommentCount(ipHash, 60)) >= 5) {
     return { error: "You're posting too fast. Try again in a minute." };
   }
 
   try {
     await addComment(serviceId, trimmed, ipHash);
-  } catch {
+  } catch (err) {
+    console.error("addComment failed", err);
     return {
-      error: "Could not insert into the data base, please try again later.",
+      error: "Something went wrong, please try again later.",
     };
   }
+  revalidatePath(`/status/${slug}`);
+}
+
+export async function reportProblem(
+  serviceId: number,
+  slug: string,
+  reason: string,
+) {
+  const ipHash = await getIpHash();
+  if ((await recentReportCount(ipHash, 60)) >= 10) {
+    return { error: "You've made too many reports." };
+  }
+
+  let inserted: boolean;
+  try {
+    inserted = await addReport(serviceId, reason, ipHash);
+  } catch (err) {
+    console.error("addReport failed", err);
+    return {
+      error: "Could not record your report, please try again later.",
+    };
+  }
+  if (!inserted) return { error: "That problem isn't valid for this service." };
+
   revalidatePath(`/status/${slug}`);
 }

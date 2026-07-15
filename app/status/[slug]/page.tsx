@@ -1,5 +1,6 @@
-import CommentsSection from "@/components/status/comments-section";
-import CommentsSectionSkeleton from "@/components/status/comments-section-skeleton";
+import { reportProblem } from "@/app/actions";
+import CommentsSection from "@/components/status/comments-section/comments-section";
+import CommentsSectionSkeleton from "@/components/status/comments-section/comments-section-skeleton";
 import ProblemSelector from "@/components/status/problem-selector";
 import ReportsChart from "@/components/status/reports-chart";
 import { sql } from "@/lib/db";
@@ -54,7 +55,10 @@ export default async function StatusPage({
         <MessageSquare className="size-5" /> Jump to Comments
       </a>
 
-      <ProblemSelector problems={service.problems} />
+      <ProblemSelector
+        problems={service.problems}
+        action={reportProblem.bind(null, service.id, service.slug)}
+      />
 
       <Suspense fallback={<CommentsSectionSkeleton service={service} />}>
         <CommentsSection service={service} />

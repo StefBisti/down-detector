@@ -1,8 +1,8 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+import { Button } from "../../ui/button";
+import { Input } from "../../ui/input";
 import { useActionState } from "react";
 
 export default function CommentsSectionForm({
