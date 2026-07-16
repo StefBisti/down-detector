@@ -4,8 +4,8 @@ import CommentsSectionSkeleton from "@/components/status/comments-section/commen
 import ProblemSelector from "@/components/status/reports/problem-selector";
 import ReportsChart from "@/components/status/reports/reports-chart";
 import { getHourlyReports } from "@/lib/data/reports";
-import { sql } from "@/lib/db";
-import { deriveStatus, Service, ServiceStatus } from "@/lib/services";
+import { getServices } from "@/lib/data/services";
+import { deriveStatus, ServiceStatus } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -15,8 +15,7 @@ export default async function StatusPage({
   params,
 }: PageProps<"/status/[slug]">) {
   const { slug } = await params;
-  const services =
-    (await sql`select id, slug, name, logo, description, possible_problems as problems from services`) as Service[];
+  const services = await getServices();
 
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();

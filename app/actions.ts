@@ -2,6 +2,7 @@
 
 import { addComment, recentCommentCount } from "@/lib/data/comments";
 import { addReport, recentReportCount } from "@/lib/data/reports";
+import { logSearch } from "@/lib/data/searches";
 import { getIpHash } from "@/lib/rate-limit";
 import { revalidatePath } from "next/cache";
 
@@ -56,4 +57,8 @@ export async function reportProblem(
   if (!inserted) return { error: "That problem isn't valid for this service." };
 
   revalidatePath(`/status/${slug}`);
+}
+
+export async function recordSearch(serviceId: number) {
+  await logSearch(serviceId);
 }

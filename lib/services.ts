@@ -51,9 +51,3 @@ export function deriveStatus(points: ReportPoint[]): ServiceStatus {
   if (current >= FLOOR_POSSIBLE && current > avg * 1.5) return "possible";
   return "operational";
 }
-
-// const trendingSlugs = ["spotify", "optimum-cablevision", "usps", "x-twitter"];
-
-// export const trending = trendingSlugs
-//   .map((slug) => services.find((s) => s.slug === slug))
-//   .filter((s) => s !== undefined);

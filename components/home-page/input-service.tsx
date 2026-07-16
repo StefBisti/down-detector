@@ -9,6 +9,7 @@ import { useState, useSyncExternalStore } from "react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import type { Service } from "@/lib/services";
+import { recordSearch } from "@/app/actions";
 
 function subscribeToStorage(callback: () => void) {
   window.addEventListener("storage", callback);
@@ -41,6 +42,7 @@ export default function InputService({
     .filter((s) => s !== undefined);
 
   function selectService(s: Service) {
+    void recordSearch(s.id);
     const next = [s.slug, ...recentSlugs.filter((x) => x !== s.slug)].slice(
       0,
       4,

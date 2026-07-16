@@ -5,7 +5,7 @@ import {
   CommandItem,
   CommandList,
 } from "../ui/command";
-import { Country } from "@/lib/countries";
+import { Country } from "@/lib/constants/countries";
 
 export default function CountryPicker({
   countries,

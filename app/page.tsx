@@ -1,13 +1,20 @@
 import InputService from "@/components/home-page/input-service";
 import ServicePreview from "@/components/home-page/service-preview";
 import { Separator } from "@/components/ui/separator";
+import { countries } from "@/lib/constants/countries";
+import { getTrending } from "@/lib/data/searches";
+import { getServices } from "@/lib/data/services";
 import { demoReportData } from "@/lib/services";
 import Image from "next/image";
 
 export default async function Home() {
-  const servicesCount = 35093;
-  const countriesCount = 72;
+  const countriesCount = countries.length;
   const countryCode = "us";
+
+  const [services, trending] = await Promise.all([
+    getServices(),
+    getTrending(),
+  ]);
 
   return (
     <div className="mb-20 px-4 md:px-20 flex flex-col items-center relative overflow-x-clip">
@@ -35,7 +42,7 @@ export default async function Home() {
       <div className="mt-12 flex flex-row gap-10">
         <div className="flex flex-col items-center">
           <p className="text-xl font-bold">
-            {servicesCount.toLocaleString(countryCode)}
+            {services.length.toLocaleString(countryCode)}
           </p>
           <p className="text-lg">services</p>
         </div>

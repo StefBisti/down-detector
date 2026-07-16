@@ -15,7 +15,7 @@ import {
   CollapsibleTrigger,
 } from "../ui/collapsible";
 import Link from "next/link";
-import type { Country, Language } from "@/lib/countries";
+import type { Country, Language } from "@/lib/constants/countries";
 import CountryPicker from "./country-picker";
 import { useState } from "react";
 import LanguagePicker from "./language-picker";

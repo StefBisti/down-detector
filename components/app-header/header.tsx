@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import HeaderBurger from "./header-burger";
-import { countries, Country, Language } from "@/lib/countries";
+import { countries, Country, Language } from "@/lib/constants/countries";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { ChevronDown, Languages } from "lucide-react";

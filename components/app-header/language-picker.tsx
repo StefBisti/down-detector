@@ -1,4 +1,4 @@
-import { Language } from "@/lib/countries";
+import { Language } from "@/lib/constants/countries";
 import { Button } from "../ui/button";
 
 export default function LanguagePicker({
