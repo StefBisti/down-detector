@@ -28,10 +28,10 @@ export default function ProblemSelector({
   }
 
   return (
-    <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-card">
-      <p className="flex items-center gap-3 text-3xl font-bold text-card-foreground">
+    <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-xl border border-border bg-card shadow-sm">
+      <p className="flex items-center gap-3 text-2xl font-bold text-card-foreground">
         Report a problem
-        <span className="grid size-8 place-items-center rounded-lg bg-primary text-xl font-bold text-primary-foreground">
+        <span className="grid size-7 place-items-center rounded-lg bg-primary text-lg font-bold text-primary-foreground">
           !
         </span>
       </p>
@@ -46,7 +46,7 @@ export default function ProblemSelector({
               onClick={() => report(p)}
               disabled={pending || isReported}
               className="group px-2.5 h-9! flex justify-start items-center gap-4
-                rounded-full border
+                border
                 text-left text-base font-medium text-foreground bg-background border-border hover:border-muted-foreground hover:bg-background"
             >
               <span className="grid size-5 shrink-0 place-items-center rounded-full border-2 border-primary">

@@ -105,7 +105,7 @@ function CountryDropdown({
             variant="ghost"
             className="h-auto px-4 py-3 gap-2 text-base font-normal"
           >
-            <span className={`fi fi-${selectedCountry.code} rounded-xs`} />
+            <span className={`fi fi-${selectedCountry.code}`} />
             {selectedCountry.name}
             <ChevronDown className="size-5 transition-none in-data-popup-open:rotate-180" />
           </Button>

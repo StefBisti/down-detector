@@ -10,7 +10,7 @@ export function CommentsSectionShell({
   return (
     <section
       id="Comments"
-      className="container max-w-3xl rounded-md bg-card px-8 py-8"
+      className="container max-w-3xl rounded-xl border border-border bg-card shadow-sm px-8 py-8"
     >
       <h2 className="text-2xl font-semibold text-card-foreground">
         Having a problem with {service.name}?

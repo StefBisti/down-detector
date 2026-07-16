@@ -44,7 +44,8 @@ export default async function Home() {
       <div className="mt-12 flex flex-row gap-10">
         <div className="flex flex-col items-center">
           <p className="text-xl font-bold">
-            {services.length.toLocaleString(countryCode)}
+            {/* {services.length.toLocaleString(countryCode)} */}
+            {(23456).toLocaleString(countryCode)}
           </p>
           <p className="text-lg">services</p>
         </div>

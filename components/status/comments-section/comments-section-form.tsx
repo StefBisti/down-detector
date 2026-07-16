@@ -17,7 +17,7 @@ export default function CommentsSectionForm({
   );
   return (
     <form className="w-full mt-4 flex flex-col gap-2" action={formAction}>
-      <div className="w-full flex gap-2">
+      <div className="w-full flex flex-col gap-2 sm:flex-row">
         <Input
           required
           name="message"
@@ -25,7 +25,7 @@ export default function CommentsSectionForm({
           placeholder="What's wrong?"
           className="h-10! pl-3! bg-background! border-border hover:border-muted-foreground hover:bg-background"
         />
-        <Button type="submit" className="h-10! w-25!" disabled={pending}>
+        <Button type="submit" className="h-10! w-full sm:w-25!" disabled={pending}>
           Send
           <ArrowRight />
         </Button>

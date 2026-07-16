@@ -17,7 +17,7 @@ import {
 } from "recharts";
 
 const chartConfig = {
-  reports: { label: "Reports", color: "var(--chart-4)" },
+  reports: { label: "Reports", color: "var(--chart-3)" },
   baseline: { label: "Baseline", color: "var(--foreground)" },
 } satisfies ChartConfig;
 
@@ -34,8 +34,9 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
           dataKey="time"
           tickLine={false}
           axisLine={{ stroke: "var(--muted-foreground)" }}
-          interval={5}
-          tick={{ fill: "var(--muted-foreground)" }}
+          interval="preserveStartEnd"
+          minTickGap={48}
+          tick={{ fill: "var(--muted-foreground)", fontSize: 12 }}
           tickMargin={10}
         />
         <YAxis
@@ -49,9 +50,7 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
           tick={{ fill: "var(--muted-foreground)" }}
           width={40}
         />
-        <ChartTooltip
-          content={<ChartTooltipContent className="rounded-[4.5px]" />}
-        />
+        <ChartTooltip content={<ChartTooltipContent />} />
         <defs>
           <linearGradient id="fillReports" x1="0" y1="0" x2="0" y2="1">
             <stop

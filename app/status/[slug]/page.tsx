@@ -27,47 +27,56 @@ export default async function StatusPage({
 
   const statusUI: Record<
     ServiceStatus,
-    { headline: string; className: string }
+    { label: string; headline: string; border: string; badge: string }
   > = {
     operational: {
+      label: "No problems detected",
       headline: `User reports show no current problems with ${service.name}`,
-      className: "text-foreground",
+      border: "border-emerald-500/40",
+      badge: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400",
     },
     possible: {
+      label: "Possible problems",
       headline: `User reports indicate possible problems at ${service.name}`,
-      className: "text-amber-600 dark:text-amber-500",
+      border: "border-amber-500/50",
+      badge: "bg-amber-500/10 text-amber-700 dark:text-amber-500",
     },
     down: {
+      label: "Problems detected",
       headline: `User reports indicate problems at ${service.name}`,
-      className: "text-destructive",
+      border: "border-destructive/50",
+      badge: "bg-destructive/10 text-destructive",
     },
   };
+  const s = statusUI[status];
 
   return (
     <div className="mb-20 mt-5 px-2 md:px-20 flex flex-col items-center gap-6">
-      <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-card border-primary border-2">
-        <Image
-          src={service.logo}
-          alt={`${service.name} logo`}
-          width={160}
-          height={200}
-          className="flex-1 py-4 self-center h-12 w-auto"
-        />
-        <h1
-          className={`${statusUI[status].className} text-3xl font-semibold text-center`}
-        >
-          {statusUI[status].headline}
+      <div
+        className={`container max-w-3xl px-8 py-10 flex flex-col items-center gap-4 rounded-xl border bg-card shadow-sm ${s.border}`}
+      >
+        <div className="flex items-center justify-center rounded-lg bg-white p-3">
+          <Image
+            src={service.logo}
+            alt={`${service.name} logo`}
+            width={160}
+            height={200}
+            className="h-12 w-auto object-contain"
+          />
+        </div>
+        <h1 className="text-2xl md:text-3xl font-semibold text-center text-balance">
+          {s.headline}
         </h1>
         {service.description.length > 0 && (
-          <h2 className="mt-8 text-muted-foreground text-lg text-center">
+          <p className="text-muted-foreground text-center text-balance max-w-prose">
             {service.description}
-          </h2>
+          </p>
         )}
       </div>
 
-      <div className="container max-w-3xl overflow-hidden rounded-md bg-card">
-        <div className="bg-muted px-8 py-5">
-          <p className="text-xl font-semibold text-foreground">
+      <div className="container max-w-3xl overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+        <div className="bg-muted px-8 py-4 border-b border-border">
+          <p className="text-lg font-semibold text-foreground">
             {service.name} problems reported in the last 24 hours
           </p>
         </div>
@@ -76,8 +85,11 @@ export default async function StatusPage({
         </div>
       </div>
 
-      <a className="flex items-center gap-3 text-lg" href="#Comments">
-        <MessageSquare className="size-5" /> Jump to Comments
+      <a
+        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        href="#Comments"
+      >
+        <MessageSquare className="size-4" /> Jump to comments
       </a>
 
       <ProblemSelector

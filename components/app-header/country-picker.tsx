@@ -17,9 +17,9 @@ export default function CountryPicker({
   setSelected: (c: Country) => void;
 }) {
   return (
-    <Command className="p-0 rounded-none!">
+    <Command className="p-0">
       <CommandInput placeholder="Search countries ..." />
-      <CommandList className="mt-3 rounded-none!">
+      <CommandList className="mt-3">
         <CommandEmpty>No countries found</CommandEmpty>
         {countries.map((c) => (
           <CommandItem
@@ -31,10 +31,10 @@ export default function CountryPicker({
               setOpen(false);
             }}
             className="px-4 py-3 gap-4 items-center
-              rounded-none border-none 
+              border-none rounded-none
               text-base data-[selected=true]:bg-foreground/8 data-[selected=false]:bg-foreground/3 bg-foreground/3"
           >
-            <span className={`fi fi-${c.code} rounded-sm`} />
+            <span className={`fi fi-${c.code}`} />
             {c.name}
           </CommandItem>
         ))}

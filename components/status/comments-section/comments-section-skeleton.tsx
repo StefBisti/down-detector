@@ -13,9 +13,9 @@ export default function CommentsSectionSkeleton({
       <Separator className="my-6 bg-border w-full h-px" />
 
       <div className="mt-8 flex flex-col gap-4">
-        <Skeleton className="w-full h-12 rounded-[0.75rem]" />
-        <Skeleton className="w-full h-12 rounded-[0.75rem]" />
-        <Skeleton className="w-full h-12 rounded-[0.75rem]" />
+        <Skeleton className="w-full h-12" />
+        <Skeleton className="w-full h-12" />
+        <Skeleton className="w-full h-12" />
       </div>
     </CommentsSectionShell>
   );

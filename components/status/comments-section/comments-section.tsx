@@ -20,13 +20,18 @@ export default async function CommentsSection({
 
       <Separator className="my-6 bg-border w-full h-px" />
 
-      <div className="mt-0 flex flex-col gap-4">
+      <div className="flex flex-col">
         {comments.map((c) => (
-          <div key={c.id} className="flex gap-4 justify-start items-start">
-            <span className="mt-0.5 text-muted-foreground min-w-30 max-w-30">
+          <div
+            key={c.id}
+            className="flex flex-col gap-1 py-3 sm:flex-row sm:items-start sm:gap-4"
+          >
+            <span className="text-sm text-muted-foreground sm:mt-0.5 sm:w-30 sm:shrink-0">
               {relativeTime(c.postedAt)}
             </span>
-            <p className="text-lg text-card-foreground">{c.message}</p>
+            <p className="min-w-0 flex-1 text-base sm:text-lg text-card-foreground wrap-break-word">
+              {c.message}
+            </p>
           </div>
         ))}
       </div>

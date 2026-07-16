@@ -54,7 +54,7 @@ export default function InputService({
   return (
     <Command
       shouldFilter={false}
-      className="group mt-4 p-0 w-full max-w-138 rounded-[28px]! bg-popover"
+      className="group mt-4 p-0 w-full max-w-138 bg-popover border border-input shadow-sm transition-shadow focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/40 hover:shadow-md"
     >
       <InputGroup className="h-12! px-2 gap-2 border-transparent bg-transparent! group-focus-within:bg-transparent!">
         <InputGroupAddon>
@@ -90,7 +90,7 @@ export default function InputService({
                   key={item.id}
                   value={item.slug}
                   onSelect={() => selectService(item)}
-                  className="cursor-pointer h-10 pl-6 justify-start! bg-transparent hover:bg-muted rounded-none text-foreground"
+                  className="cursor-pointer h-10 pl-6 justify-start! bg-transparent hover:bg-muted text-foreground"
                 >
                   {item.name}
                 </CommandItem>
@@ -118,7 +118,7 @@ export default function InputService({
                     key={item.id}
                     value={`recent-${item.slug}`}
                     onSelect={() => selectService(item)}
-                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! rounded-[0.4rem]! text-foreground!"
+                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! text-foreground!"
                   >
                     {item.name}
                   </CommandItem>
@@ -137,7 +137,7 @@ export default function InputService({
                     key={item.id}
                     value={`trending-${item.slug}`}
                     onSelect={() => selectService(item)}
-                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! rounded-[0.4rem]! text-foreground!"
+                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! text-foreground!"
                   >
                     {item.name}
                   </CommandItem>

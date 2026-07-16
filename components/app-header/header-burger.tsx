@@ -137,22 +137,22 @@ function CountrySelector({
 
   return (
     <Collapsible
-      className="w-full rounded-none! overflow-hidden!"
+      className="w-full overflow-hidden"
       open={open}
       onOpenChange={setOpen}
     >
       <CollapsibleTrigger
         render={
-          <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start gap-3 text-base font-semibold text-foreground hover:bg-foreground/8">
+          <Button className="border-none rounded-none bg-transparent w-full h-auto px-4 py-3 justify-start gap-3 text-base font-semibold text-foreground hover:bg-foreground/8">
             <span
-              className={`fi fi-${selectedCountry.code} rounded-xs w-5 h-5`}
+              className={`fi fi-${selectedCountry.code} w-5 h-5`}
             />
             {selectedCountry.name}
             <ChevronDown className="ml-auto size-5 in-data-panel-open:rotate-180" />
           </Button>
         }
       />
-      <CollapsibleContent className="flex flex-col gap-0 rounded-none! overflow-hidden!">
+      <CollapsibleContent className="flex flex-col gap-0 overflow-hidden">
         <CountryPicker
           countries={allCountries}
           setOpen={setOpen}
@@ -180,7 +180,7 @@ function LanguageSelector({
         render={
           <Button
             className="w-full h-auto px-4 py-3 justify-start gap-3
-            rounded-none border-none
+            border-none rounded-none
             bg-transparent text-base text-foreground font-semibold hover:bg-foreground/8"
           >
             <Languages className="size-5" />

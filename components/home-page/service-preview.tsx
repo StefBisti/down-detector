@@ -10,16 +10,18 @@ export default function ServicePreview({ service, data }: ServicePreviewProps) {
   return (
     <a
       href={`/status/${service.slug}`}
-      className="flex flex-col justify-between rounded-xl bg-foreground p-4 text-background"
+      className="group flex flex-col justify-between gap-3 rounded-xl border border-border bg-card p-4 text-card-foreground shadow-xs transition-all hover:border-foreground/25 hover:shadow-md"
     >
-      <p>{service.name}</p>
-      <Image
-        src={service.logo}
-        alt={`${service.name} logo`}
-        width={160}
-        height={64}
-        className="flex-1 py-4 self-center h-12 w-auto"
-      />
+      <p className="text-sm font-medium">{service.name}</p>
+      <div className="flex flex-1 items-center justify-center rounded-lg bg-white p-3">
+        <Image
+          src={service.logo}
+          alt={`${service.name} logo`}
+          width={160}
+          height={64}
+          className="h-10 w-auto object-contain"
+        />
+      </div>
       <Sparkline data={data} />
     </a>
   );
