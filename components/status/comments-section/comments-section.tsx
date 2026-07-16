@@ -18,15 +18,15 @@ export default async function CommentsSection({
     <CommentsSectionShell service={service}>
       <CommentsSectionForm action={action} />
 
-      <Separator className="my-6 bg-zinc-500 w-full h-px" />
+      <Separator className="my-6 bg-border w-full h-px" />
 
       <div className="mt-0 flex flex-col gap-4">
         {comments.map((c) => (
           <div key={c.id} className="flex gap-4 justify-start items-start">
-            <span className="mt-0.5 text-zinc-400 min-w-30 max-w-30">
+            <span className="mt-0.5 text-muted-foreground min-w-30 max-w-30">
               {relativeTime(c.postedAt)}
             </span>
-            <p className="text-lg text-zinc-100">{c.message}</p>
+            <p className="text-lg text-card-foreground">{c.message}</p>
           </div>
         ))}
       </div>

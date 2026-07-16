@@ -26,7 +26,7 @@ export default function NotFound() {
           size="lg"
           render={<Link href="/companies" />}
           nativeButton={false}
-          className="h-13 w-40 text-base"
+          className="h-13 w-40 text-base border-muted-foreground"
         >
           View services
         </Button>

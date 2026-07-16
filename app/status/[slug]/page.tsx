@@ -31,21 +31,21 @@ export default async function StatusPage({
   > = {
     operational: {
       headline: `User reports show no current problems with ${service.name}`,
-      className: "text-black",
+      className: "text-foreground",
     },
     possible: {
       headline: `User reports indicate possible problems at ${service.name}`,
-      className: "text-amber-600",
+      className: "text-amber-600 dark:text-amber-500",
     },
     down: {
       headline: `User reports indicate problems at ${service.name}`,
-      className: "text-red-600",
+      className: "text-destructive",
     },
   };
 
   return (
     <div className="mb-20 mt-5 px-2 md:px-20 flex flex-col items-center gap-6">
-      <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-white border-primary border-2">
+      <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-card border-primary border-2">
         <Image
           src={service.logo}
           alt={`${service.name} logo`}
@@ -59,15 +59,15 @@ export default async function StatusPage({
           {statusUI[status].headline}
         </h1>
         {service.description.length > 0 && (
-          <h2 className="mt-8 text-black/60 text-lg text-center">
+          <h2 className="mt-8 text-muted-foreground text-lg text-center">
             {service.description}
           </h2>
         )}
       </div>
 
-      <div className="container max-w-3xl overflow-hidden rounded-md bg-zinc-800">
-        <div className="bg-zinc-700 px-8 py-5">
-          <p className="text-xl font-semibold text-white">
+      <div className="container max-w-3xl overflow-hidden rounded-md bg-card">
+        <div className="bg-muted px-8 py-5">
+          <p className="text-xl font-semibold text-foreground">
             {service.name} problems reported in the last 24 hours
           </p>
         </div>

@@ -28,14 +28,14 @@ export default function ProblemSelector({
   }
 
   return (
-    <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-zinc-700">
-      <p className="flex items-center gap-3 text-3xl font-bold text-white">
+    <div className="container max-w-3xl px-8 py-8 flex flex-col items-center rounded-md bg-card">
+      <p className="flex items-center gap-3 text-3xl font-bold text-card-foreground">
         Report a problem
-        <span className="grid size-8 place-items-center rounded-lg bg-primary text-xl font-bold text-white">
+        <span className="grid size-8 place-items-center rounded-lg bg-primary text-xl font-bold text-primary-foreground">
           !
         </span>
       </p>
-      <p className="mt-2 text-lg text-zinc-300">Select which issue applies</p>
+      <p className="mt-2 text-lg text-muted-foreground">Select which issue applies</p>
 
       <div className="mt-10 w-full grid grid-cols-1 sm:grid-cols-2 gap-x-2 gap-y-2">
         {problems.map((p) => {
@@ -47,7 +47,7 @@ export default function ProblemSelector({
               disabled={pending || isReported}
               className="group px-2.5 h-9! flex justify-start items-center gap-4
                 rounded-full border
-                text-left text-base font-medium text-white bg-zinc-900 border-zinc-600 hover:border-zinc-400 hover:bg-zinc-900"
+                text-left text-base font-medium text-foreground bg-background border-border hover:border-muted-foreground hover:bg-background"
             >
               <span className="grid size-5 shrink-0 place-items-center rounded-full border-2 border-primary">
                 <span
@@ -65,9 +65,11 @@ export default function ProblemSelector({
         })}
       </div>
 
-      {error && <p className="mt-4 text-red-400">{error}</p>}
+      {error && <p className="mt-4 text-destructive">{error}</p>}
       {reported.size > 0 && !error && (
-        <p className="mt-4 text-zinc-300">Thanks — your report was recorded.</p>
+        <p className="mt-4 text-muted-foreground">
+          Thanks — your report was recorded.
+        </p>
       )}
     </div>
   );

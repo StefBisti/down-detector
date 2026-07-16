@@ -7,8 +7,9 @@ export default function ThemeButton() {
 
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="icon-lg"
+      className="h-11 w-11 rounded-full"
       aria-label="Toggle light mode"
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
     >

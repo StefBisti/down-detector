@@ -23,14 +23,14 @@ export default function CommentsSectionForm({
           name="message"
           maxLength={1000}
           placeholder="What's wrong?"
-          className="h-10! pl-3! bg-zinc-900! border-zinc-600 hover:border-zinc-400 hover:bg-zinc-900"
+          className="h-10! pl-3! bg-background! border-border hover:border-muted-foreground hover:bg-background"
         />
         <Button type="submit" className="h-10! w-25!" disabled={pending}>
           Send
           <ArrowRight />
         </Button>
       </div>
-      {state?.error && <p className="text-red-500">{state.error}</p>}
+      {state?.error && <p className="text-destructive">{state.error}</p>}
     </form>
   );
 }

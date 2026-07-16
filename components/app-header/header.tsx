@@ -26,7 +26,7 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-sm bg-black/50">
+    <header className="sticky top-0 z-50 backdrop-blur-sm dark:bg-black/50">
       <div className="h-16 mx-auto max-w-10xl w-full flex items-center justify-start gap-4 px-4">
         <HeaderBurger
           hamburgerOpen={hamburgerOpen}
@@ -79,9 +79,7 @@ export default function Header() {
             </Button>
           </Link>
 
-          <div className="ml-3">
-            <ThemeButton />
-          </div>
+          <ThemeButton />
         </nav>
       </div>
     </header>
@@ -113,7 +111,7 @@ function CountryDropdown({
           </Button>
         }
       />
-      <PopoverContent align="end" className="w-65 p-0">
+      <PopoverContent align="end" className="w-65 p-0 overflow-hidden!">
         <CountryPicker
           countries={countries}
           setOpen={setOpen}
@@ -149,7 +147,10 @@ function LanguageDropdown({
           </Button>
         }
       />
-      <PopoverContent align="end" className="w-50 p-0 flex flex-col gap-0">
+      <PopoverContent
+        align="end"
+        className="w-50 p-0 flex flex-col gap-0 overflow-hidden"
+      >
         <LanguagePicker
           possibleLanguages={possibleLanguages}
           setOpen={setOpen}

@@ -48,7 +48,7 @@ export default async function Home() {
           </p>
           <p className="text-lg">services</p>
         </div>
-        <Separator orientation="vertical" className="w-px bg-white" />
+        <Separator orientation="vertical" className="w-px bg-foreground" />
         <div className="flex flex-col items-center">
           <p className="text-xl font-bold">{countriesCount}</p>
           <p className="text-lg">countries</p>

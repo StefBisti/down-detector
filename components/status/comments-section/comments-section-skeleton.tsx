@@ -10,7 +10,7 @@ export default function CommentsSectionSkeleton({
 }) {
   return (
     <CommentsSectionShell service={service}>
-      <Separator className="my-6 bg-zinc-500 w-full h-px" />
+      <Separator className="my-6 bg-border w-full h-px" />
 
       <div className="mt-8 flex flex-col gap-4">
         <Skeleton className="w-full h-12 rounded-[0.75rem]" />

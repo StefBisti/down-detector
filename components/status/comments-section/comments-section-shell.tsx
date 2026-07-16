@@ -10,12 +10,12 @@ export function CommentsSectionShell({
   return (
     <section
       id="Comments"
-      className="container max-w-3xl rounded-md bg-zinc-700 px-8 py-8"
+      className="container max-w-3xl rounded-md bg-card px-8 py-8"
     >
-      <h2 className="text-2xl font-semibold text-white">
+      <h2 className="text-2xl font-semibold text-card-foreground">
         Having a problem with {service.name}?
       </h2>
-      <p className="mt-1 text-lg text-zinc-300">
+      <p className="mt-1 text-lg text-muted-foreground">
         Comments are anonymous and help others understand the issue.
       </p>
 

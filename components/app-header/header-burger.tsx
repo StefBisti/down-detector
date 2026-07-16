@@ -136,7 +136,11 @@ function CountrySelector({
   const [open, setOpen] = useState(false);
 
   return (
-    <Collapsible className="w-full" open={open} onOpenChange={setOpen}>
+    <Collapsible
+      className="w-full rounded-none! overflow-hidden!"
+      open={open}
+      onOpenChange={setOpen}
+    >
       <CollapsibleTrigger
         render={
           <Button className="rounded-none border-none bg-transparent w-full h-auto px-4 py-3 justify-start gap-3 text-base font-semibold text-foreground hover:bg-foreground/8">
@@ -148,7 +152,7 @@ function CountrySelector({
           </Button>
         }
       />
-      <CollapsibleContent className="flex flex-col gap-0">
+      <CollapsibleContent className="flex flex-col gap-0 rounded-none! overflow-hidden!">
         <CountryPicker
           countries={allCountries}
           setOpen={setOpen}

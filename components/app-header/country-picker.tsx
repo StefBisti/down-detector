@@ -17,9 +17,9 @@ export default function CountryPicker({
   setSelected: (c: Country) => void;
 }) {
   return (
-    <Command className="p-0">
+    <Command className="p-0 rounded-none!">
       <CommandInput placeholder="Search countries ..." />
-      <CommandList className="mt-3">
+      <CommandList className="mt-3 rounded-none!">
         <CommandEmpty>No countries found</CommandEmpty>
         {countries.map((c) => (
           <CommandItem

@@ -17,8 +17,8 @@ import {
 } from "recharts";
 
 const chartConfig = {
-  reports: { label: "Reports", color: "#3f96a8" },
-  baseline: { label: "Baseline", color: "#ffffff" },
+  reports: { label: "Reports", color: "var(--chart-4)" },
+  baseline: { label: "Baseline", color: "var(--foreground)" },
 } satisfies ChartConfig;
 
 export default function ReportsChart({ data }: { data: ReportPoint[] }) {
@@ -28,14 +28,14 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
         <CartesianGrid
           horizontal={false}
           strokeDasharray="4 6"
-          stroke="#ffffff2a"
+          stroke="var(--border)"
         />
         <XAxis
           dataKey="time"
           tickLine={false}
-          axisLine={{ stroke: "#a1a1aa" }}
+          axisLine={{ stroke: "var(--muted-foreground)" }}
           interval={5}
-          tick={{ fill: "#a1a1aa" }}
+          tick={{ fill: "var(--muted-foreground)" }}
           tickMargin={10}
         />
         <YAxis
@@ -45,8 +45,8 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
           ]}
           allowDecimals={false}
           tickLine={true}
-          axisLine={{ stroke: "#a1a1aa" }}
-          tick={{ fill: "#a1a1aa" }}
+          axisLine={{ stroke: "var(--muted-foreground)" }}
+          tick={{ fill: "var(--muted-foreground)" }}
           width={40}
         />
         <ChartTooltip
