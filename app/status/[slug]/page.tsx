@@ -4,6 +4,7 @@ import CommentsSectionSkeleton from "@/components/status/comments-section/commen
 import ProblemSelector from "@/components/status/reports/problem-selector";
 import ReportsChart from "@/components/status/reports/reports-chart";
 import { getHourlyReports } from "@/lib/data/reports";
+import { logSearch } from "@/lib/data/searches";
 import { getServices } from "@/lib/data/services";
 import { deriveStatus, ServiceStatus } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
@@ -19,6 +20,7 @@ export default async function StatusPage({
 
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
+  await logSearch(service.id);
 
   const points = await getHourlyReports(service.id);
   const status = deriveStatus(points);

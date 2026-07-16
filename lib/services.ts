@@ -13,22 +13,6 @@ export type Comment = {
   postedAt: Date;
 };
 
-// Deterministic (seeded by slug) so server and client render the same array.
-export function demoReportData(seed: string, points = 40): number[] {
-  let h = 0;
-  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) | 0;
-  const rand = () => {
-    h = (h * 1103515245 + 12345) | 0;
-    return ((h >>> 16) & 0x7fff) / 0x7fff;
-  };
-  const hasOutage = rand() < 0.4;
-  return Array.from({ length: points }, (_, i) => {
-    const baseline = 2 + rand() * 6;
-    const spiking = hasOutage && i >= points - 5;
-    return Math.round(spiking ? baseline + 40 + rand() * 60 : baseline);
-  });
-}
-
 export type ReportPoint = {
   time: string;
   reports: number;

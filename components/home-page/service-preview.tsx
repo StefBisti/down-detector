@@ -26,13 +26,16 @@ export default function ServicePreview({ service, data }: ServicePreviewProps) {
 }
 
 function Sparkline({ data }: { data: number[] }) {
-  const max = Math.max(...data);
-  const points = data
-    .map(
-      (value, i) =>
-        `${(i / (data.length - 1)) * 100},${30 - (value / max) * 28}`,
-    )
-    .join(" ");
+  const max = Math.max(...data, 1);
+  const points =
+    data.length < 2
+      ? "0,28 100,28"
+      : data
+          .map(
+            (value, i) =>
+              `${(i / (data.length - 1)) * 100},${28 - (value / max) * 26}`,
+          )
+          .join(" ");
 
   return (
     <svg

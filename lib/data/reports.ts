@@ -2,6 +2,30 @@ import "server-only";
 import { sql } from "../db";
 import type { ReportPoint } from "../services";
 
+export async function getReportSeries(
+  serviceIds: number[],
+): Promise<Record<number, number[]>> {
+  if (serviceIds.length === 0) return {};
+  const rows = (await sql`
+    select s.id as service_id, count(r.id)::int as reports
+    from services s
+    cross join generate_series(
+      date_bin('30 minutes', now() - interval '24 hours', timestamptz 'epoch'),
+      date_bin('30 minutes', now(), timestamptz 'epoch'),
+      interval '30 minutes'
+    ) as b(bucket)
+    left join reports r
+      on r.service_id = s.id
+      and date_bin('30 minutes', r.posted_at, timestamptz 'epoch') = b.bucket
+    where s.id = any(${serviceIds}::int[])
+    group by s.id, b.bucket
+    order by s.id, b.bucket`) as { service_id: number; reports: number }[];
+
+  const series: Record<number, number[]> = {};
+  for (const row of rows) (series[row.service_id] ??= []).push(row.reports);
+  return series;
+}
+
 export async function getHourlyReports(
   serviceId: number,
 ): Promise<ReportPoint[]> {

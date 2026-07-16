@@ -2,19 +2,21 @@ import InputService from "@/components/home-page/input-service";
 import ServicePreview from "@/components/home-page/service-preview";
 import { Separator } from "@/components/ui/separator";
 import { countries } from "@/lib/constants/countries";
+import { getReportSeries } from "@/lib/data/reports";
 import { getTrending } from "@/lib/data/searches";
 import { getServices } from "@/lib/data/services";
-import { demoReportData } from "@/lib/services";
 import Image from "next/image";
 
 export default async function Home() {
   const countriesCount = countries.length;
   const countryCode = "us";
 
-  const [services, trending] = await Promise.all([
+  const [services, previews] = await Promise.all([
     getServices(),
-    getTrending(),
+    getTrending(15),
   ]);
+  const trending = previews.slice(0, 4);
+  const series = await getReportSeries(previews.map((p) => p.id));
 
   return (
     <div className="mb-20 px-4 md:px-20 flex flex-col items-center relative overflow-x-clip">
@@ -60,11 +62,7 @@ export default async function Home() {
 
       <div className="mt-62 w-full grid grid-cols-2 auto-rows-50 gap-4 lg:max-w-5xl lg:grid-cols-3 lg:mx-auto">
         {services.map((s) => (
-          <ServicePreview
-            key={s.id}
-            service={s}
-            data={demoReportData(s.slug)}
-          />
+          <ServicePreview key={s.id} service={s} data={series[s.id] ?? []} />
         ))}
       </div>
     </div>
