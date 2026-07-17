@@ -1,6 +1,7 @@
 import InputService from "@/components/home-page/input-service";
 import ServicePreview from "@/components/home-page/service-preview";
 import { Separator } from "@/components/ui/separator";
+import { countries } from "@/lib/constants/countries";
 import { getReportSeries } from "@/lib/data/reports";
 import { getTrending } from "@/lib/data/searches";
 import { getServices } from "@/lib/data/services";
@@ -8,7 +9,7 @@ import { getSelection } from "@/lib/locale";
 import Image from "next/image";
 
 export default async function Home() {
-  const countriesCount = 21332;
+  const countriesCount = countries.length;
 
   const [services, previews] = await Promise.all([
     getServices(),
@@ -64,7 +65,7 @@ export default async function Home() {
       <InputService services={services} trendingSearches={trending} />
 
       <div className="mt-62 w-full grid grid-cols-2 auto-rows-50 gap-4 lg:max-w-5xl lg:grid-cols-3 lg:mx-auto">
-        {services.map((s) => (
+        {previews.map((s) => (
           <ServicePreview key={s.id} service={s} data={series[s.id] ?? []} />
         ))}
       </div>

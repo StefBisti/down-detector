@@ -2,6 +2,9 @@ import "server-only";
 import { sql } from "../db";
 import type { ReportPoint } from "../services";
 
+const BUCKET_INTERVAL = "30 minutes";
+const BASELINE_HOURS = 3;
+
 export async function getReportSeries(
   serviceIds: number[],
 ): Promise<Record<number, number[]>> {
@@ -10,13 +13,13 @@ export async function getReportSeries(
     select s.id as service_id, count(r.id)::int as reports
     from services s
     cross join generate_series(
-      date_bin('30 minutes', now() - interval '24 hours', timestamptz 'epoch'),
-      date_bin('30 minutes', now(), timestamptz 'epoch'),
-      interval '30 minutes'
+      date_bin('${BUCKET_INTERVAL}', now() - interval '24 hours', timestamptz 'epoch'),
+      date_bin('${BUCKET_INTERVAL}', now(), timestamptz 'epoch'),
+      interval '${BUCKET_INTERVAL}'
     ) as b(bucket)
     left join reports r
       on r.service_id = s.id
-      and date_bin('30 minutes', r.posted_at, timestamptz 'epoch') = b.bucket
+      and date_bin('${BUCKET_INTERVAL}', r.posted_at, timestamptz 'epoch') = b.bucket
     where s.id = any(${serviceIds}::int[])
     group by s.id, b.bucket
     order by s.id, b.bucket`) as { service_id: number; reports: number }[];
@@ -32,17 +35,17 @@ export async function getHourlyReports(
   const rows = (await sql`
     select bucket, count(r.id)::int as reports
     from generate_series(
-      date_bin('30 minutes', now() - interval '24 hours', timestamptz 'epoch'),
-      date_bin('30 minutes', now(), timestamptz 'epoch'),
-      interval '30 minutes'
+      date_bin('${BUCKET_INTERVAL}', now() - interval '24 hours', timestamptz 'epoch'),
+      date_bin('${BUCKET_INTERVAL}', now(), timestamptz 'epoch'),
+      interval '${BUCKET_INTERVAL}'
     ) as bucket
     left join reports r
       on r.service_id = ${serviceId}
-      and date_bin('30 minutes', r.posted_at, timestamptz 'epoch') = bucket
+      and date_bin('${BUCKET_INTERVAL}', r.posted_at, timestamptz 'epoch') = bucket
     group by bucket
     order by bucket`) as { bucket: Date; reports: number }[];
 
-  const WINDOW = 6;
+  const WINDOW = BASELINE_HOURS * 2;
 
   return rows.map((r, i) => {
     const window = rows.slice(Math.max(0, i - WINDOW + 1), i + 1);

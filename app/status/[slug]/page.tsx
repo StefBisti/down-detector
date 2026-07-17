@@ -11,6 +11,7 @@ import { deriveStatus, ServiceStatus } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { after } from "next/server";
 import { Suspense } from "react";
 
 export default async function StatusPage({
@@ -21,7 +22,8 @@ export default async function StatusPage({
 
   const service = services.find((s) => s.slug === slug);
   if (!service) notFound();
-  await logSearch(service.id);
+
+  after(() => logSearch(service.id));
 
   const { locale } = await getSelection();
   const points = await getHourlyReports(service.id);

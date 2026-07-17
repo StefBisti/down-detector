@@ -9,8 +9,8 @@ const UNITS: { unit: Intl.RelativeTimeFormatUnit; seconds: number }[] = [
 
 const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
 
-export function relativeTime(isoDate: Date): string {
-  const diffSeconds = (isoDate.getTime() - Date.now()) / 1000;
+export function relativeTime(date: Date): string {
+  const diffSeconds = (date.getTime() - Date.now()) / 1000;
 
   for (const { unit, seconds } of UNITS) {
     if (Math.abs(diffSeconds) >= seconds) {

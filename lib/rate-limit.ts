@@ -1,10 +1,11 @@
 import "server-only";
 import { createHash } from "crypto";
 import { headers } from "next/headers";
+import { ipSalt } from "./env";
 
-export function hashIp(ip: string) {
+function hashIp(ip: string) {
   return createHash("sha256")
-    .update(ip + process.env.IP_SALT)
+    .update(ip + ipSalt)
     .digest("hex");
 }
 
