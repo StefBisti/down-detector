@@ -4,6 +4,7 @@ import { addComment, recentCommentCount } from "@/lib/data/comments";
 import { addReport, recentReportCount } from "@/lib/data/reports";
 import { getIpHash } from "@/lib/rate-limit";
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 
 export async function postMessage(
   serviceId: number,
@@ -56,4 +57,11 @@ export async function reportProblem(
   if (!inserted) return { error: "That problem isn't valid for this service." };
 
   revalidatePath(`/status/${slug}`);
+}
+
+export async function setLocale(countryCode: string, languageCode: string) {
+  const jar = await cookies();
+  const opts = { path: "/", maxAge: 60 * 60 * 24 * 365 };
+  jar.set("country", countryCode, opts);
+  jar.set("language", languageCode, opts);
 }

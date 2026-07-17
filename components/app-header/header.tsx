@@ -3,26 +3,49 @@
 import Link from "next/link";
 import { useState } from "react";
 import HeaderBurger from "./header-burger";
-import { countries, Country, Language } from "@/lib/constants/countries";
+import {
+  countries,
+  Country,
+  countryByCode,
+  Language,
+  languageByCode,
+} from "@/lib/constants/countries";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { ChevronDown, Languages } from "lucide-react";
 import CountryPicker from "./country-picker";
 import LanguagePicker from "./language-picker";
 import ThemeButton from "./theme-button";
+import { useRouter } from "next/navigation";
+import { setLocale } from "@/app/actions";
 
-export default function Header() {
+export default function Header({
+  initialCountryCode,
+  initialLanguageCode,
+}: {
+  initialCountryCode: string;
+  initialLanguageCode: string;
+}) {
+  const router = useRouter();
+
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(
-    countries.find((c) => c.code === "us")!,
+    countryByCode(initialCountryCode),
   );
   const [selectedLanguage, setSelectedLanguage] = useState(
-    countries.find((c) => c.code === "us")!.languages[0],
+    languageByCode(countryByCode(initialCountryCode), initialLanguageCode),
   );
 
   function selectCountry(c: Country) {
+    const lang = c.languages[0];
     setSelectedCountry(c);
-    setSelectedLanguage(c.languages[0]);
+    setSelectedLanguage(lang);
+    setLocale(c.code, lang.code).then(() => router.refresh());
+  }
+
+  function selectLanguage(l: Language) {
+    setSelectedLanguage(l);
+    setLocale(selectedCountry.code, l.code).then(() => router.refresh());
   }
 
   return (
@@ -35,7 +58,7 @@ export default function Header() {
           selectedCountry={selectedCountry}
           setSelectedCountry={selectCountry}
           selectedLanguage={selectedLanguage}
-          setSelectedLanguage={setSelectedLanguage}
+          setSelectedLanguage={selectLanguage}
         />
         <Link href="/" className="header:ml-10">
           <span className="tracking-wide font-heading text-primary font-black text-2xl">
@@ -57,7 +80,7 @@ export default function Header() {
             <LanguageDropdown
               possibleLanguages={selectedCountry.languages}
               selectedLanguage={selectedLanguage}
-              setSelectedLanguage={setSelectedLanguage}
+              setSelectedLanguage={selectLanguage}
             />
           )}
 

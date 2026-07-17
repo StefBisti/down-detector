@@ -90,7 +90,7 @@ export default function InputService({
                   key={item.id}
                   value={item.slug}
                   onSelect={() => selectService(item)}
-                  className="cursor-pointer h-10 pl-6 justify-start! bg-transparent hover:bg-muted text-foreground"
+                  className="cursor-pointer h-10 pl-6 justify-start! bg-transparent hover:bg-background! text-foreground"
                 >
                   {item.name}
                 </CommandItem>
@@ -118,7 +118,7 @@ export default function InputService({
                     key={item.id}
                     value={`recent-${item.slug}`}
                     onSelect={() => selectService(item)}
-                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! text-foreground!"
+                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-background! text-foreground!"
                   >
                     {item.name}
                   </CommandItem>
@@ -137,7 +137,7 @@ export default function InputService({
                     key={item.id}
                     value={`trending-${item.slug}`}
                     onSelect={() => selectService(item)}
-                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-muted! text-foreground!"
+                    className="cursor-pointer pl-10 justify-start! bg-transparent! selected:bg-muted! hover:bg-background! text-foreground!"
                   >
                     {item.name}
                   </CommandItem>

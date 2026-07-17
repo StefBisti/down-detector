@@ -14,7 +14,7 @@ export type Comment = {
 };
 
 export type ReportPoint = {
-  time: string;
+  time: number;
   reports: number;
   baseline: number;
 };

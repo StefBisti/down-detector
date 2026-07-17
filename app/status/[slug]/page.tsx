@@ -6,6 +6,7 @@ import ReportsChart from "@/components/status/reports/reports-chart";
 import { getHourlyReports } from "@/lib/data/reports";
 import { logSearch } from "@/lib/data/searches";
 import { getServices } from "@/lib/data/services";
+import { getSelection } from "@/lib/locale";
 import { deriveStatus, ServiceStatus } from "@/lib/services";
 import { MessageSquare } from "lucide-react";
 import Image from "next/image";
@@ -22,6 +23,7 @@ export default async function StatusPage({
   if (!service) notFound();
   await logSearch(service.id);
 
+  const { locale } = await getSelection();
   const points = await getHourlyReports(service.id);
   const status = deriveStatus(points);
 
@@ -81,7 +83,7 @@ export default async function StatusPage({
           </p>
         </div>
         <div className="px-4 pt-6 pb-2">
-          <ReportsChart data={points} />
+          <ReportsChart data={points} locale={locale} />
         </div>
       </div>
 

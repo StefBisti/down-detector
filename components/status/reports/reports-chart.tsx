@@ -21,7 +21,18 @@ const chartConfig = {
   baseline: { label: "Baseline", color: "var(--foreground)" },
 } satisfies ChartConfig;
 
-export default function ReportsChart({ data }: { data: ReportPoint[] }) {
+export default function ReportsChart({
+  data,
+  locale,
+}: {
+  data: ReportPoint[];
+  locale: string;
+}) {
+  const timeFmt = new Intl.DateTimeFormat(locale, {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
   return (
     <ChartContainer config={chartConfig} className="aspect-auto h-72 w-full">
       <ComposedChart data={data} margin={{ top: 10, right: 10 }}>
@@ -32,6 +43,7 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
         />
         <XAxis
           dataKey="time"
+          tickFormatter={(ms) => timeFmt.format(Number(ms))}
           tickLine={false}
           axisLine={{ stroke: "var(--muted-foreground)" }}
           interval="preserveStartEnd"
@@ -50,7 +62,15 @@ export default function ReportsChart({ data }: { data: ReportPoint[] }) {
           tick={{ fill: "var(--muted-foreground)" }}
           width={40}
         />
-        <ChartTooltip content={<ChartTooltipContent />} />
+        <ChartTooltip
+          content={
+            <ChartTooltipContent
+              labelFormatter={(value, payload) =>
+                timeFmt.format(Number(payload?.[0]?.payload?.time ?? value))
+              }
+            />
+          }
+        />
         <defs>
           <linearGradient id="fillReports" x1="0" y1="0" x2="0" y2="1">
             <stop

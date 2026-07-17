@@ -1,29 +1,24 @@
 export type Language = {
-  /** Name of the language in that language, e.g. "Deutsch" */
+  code: string; // ISO 639-1, e.g. "en", "es"
   name: string;
-  /** Name of the language in English, e.g. "German" */
   englishName: string;
 };
 
 export type Country = {
-  /** ISO 3166-1 alpha-2 code, lowercase — matches flag-icons' `fi-*` classes */
-  code: string;
-  /** Native name, shown in the UI */
+  code: string; // ISO 3166-1 alpha-2 code
   name: string;
-  /** English name — used as a search keyword; same as `name` for English-speaking countries */
   englishName: string;
-  /** Languages offered for this country; always includes English */
   languages: Language[];
 };
 
-const english: Language = { name: "English", englishName: "English" };
-const spanish: Language = { name: "Español", englishName: "Spanish" };
-const french: Language = { name: "Français", englishName: "French" };
-const german: Language = { name: "Deutsch", englishName: "German" };
-const dutch: Language = { name: "Nederlands", englishName: "Dutch" };
-const portuguese: Language = { name: "Português", englishName: "Portuguese" };
-const italian: Language = { name: "Italiano", englishName: "Italian" };
-const swedish: Language = { name: "Svenska", englishName: "Swedish" };
+const english = { code: "en", name: "English", englishName: "English" };
+const spanish = { code: "es", name: "Español", englishName: "Spanish" };
+const french = { code: "fr", name: "Français", englishName: "French" };
+const german = { code: "de", name: "Deutsch", englishName: "German" };
+const dutch = { code: "nl", name: "Nederlands", englishName: "Dutch" };
+const portuguese = { code: "pt", name: "Português", englishName: "Portuguese" };
+const italian = { code: "it", name: "Italiano", englishName: "Italian" };
+const swedish = { code: "sv", name: "Svenska", englishName: "Swedish" };
 
 export const countries: Country[] = [
   {
@@ -44,7 +39,7 @@ export const countries: Country[] = [
     englishName: "Azerbaijan",
     languages: [
       english,
-      { name: "Azərbaycanca", englishName: "Azerbaijani" },
+      { name: "Azərbaycanca", englishName: "Azerbaijani", code: "az" },
     ],
   },
   {
@@ -69,7 +64,7 @@ export const countries: Country[] = [
     code: "cz",
     name: "Česko",
     englishName: "Czech Republic",
-    languages: [english, { name: "Čeština", englishName: "Czech" }],
+    languages: [english, { name: "Čeština", englishName: "Czech", code: "cs" }],
   },
   {
     code: "cl",
@@ -81,7 +76,7 @@ export const countries: Country[] = [
     code: "dk",
     name: "Danmark",
     englishName: "Denmark",
-    languages: [english, { name: "Dansk", englishName: "Danish" }],
+    languages: [english, { name: "Dansk", englishName: "Danish", code: "da" }],
   },
   {
     code: "de",
@@ -111,13 +106,16 @@ export const countries: Country[] = [
     code: "hr",
     name: "Hrvatska",
     englishName: "Croatia",
-    languages: [english, { name: "Hrvatski", englishName: "Croatian" }],
+    languages: [
+      english,
+      { name: "Hrvatski", englishName: "Croatian", code: "hr" },
+    ],
   },
   {
     code: "ie",
     name: "Ireland",
     englishName: "Ireland",
-    languages: [english, { name: "Gaeilge", englishName: "Irish" }],
+    languages: [english, { name: "Gaeilge", englishName: "Irish", code: "ga" }],
   },
   {
     code: "it",
@@ -129,7 +127,10 @@ export const countries: Country[] = [
     code: "hu",
     name: "Magyarország",
     englishName: "Hungary",
-    languages: [english, { name: "Magyar", englishName: "Hungarian" }],
+    languages: [
+      english,
+      { name: "Magyar", englishName: "Hungarian", code: "hu" },
+    ],
   },
   {
     code: "mx",
@@ -147,13 +148,19 @@ export const countries: Country[] = [
     code: "nz",
     name: "New Zealand",
     englishName: "New Zealand",
-    languages: [english, { name: "Te Reo Māori", englishName: "Maori" }],
+    languages: [
+      english,
+      { name: "Te Reo Māori", englishName: "Maori", code: "mi" },
+    ],
   },
   {
     code: "no",
     name: "Norge",
     englishName: "Norway",
-    languages: [english, { name: "Norsk", englishName: "Norwegian" }],
+    languages: [
+      english,
+      { name: "Norsk", englishName: "Norwegian", code: "nb" },
+    ],
   },
   {
     code: "at",
@@ -165,7 +172,7 @@ export const countries: Country[] = [
     code: "pl",
     name: "Polska",
     englishName: "Poland",
-    languages: [english, { name: "Polski", englishName: "Polish" }],
+    languages: [english, { name: "Polski", englishName: "Polish", code: "pl" }],
   },
   {
     code: "pt",
@@ -177,7 +184,10 @@ export const countries: Country[] = [
     code: "ro",
     name: "România",
     englishName: "Romania",
-    languages: [english, { name: "Română", englishName: "Romanian" }],
+    languages: [
+      english,
+      { name: "Română", englishName: "Romanian", code: "ro" },
+    ],
   },
   {
     code: "ch",
@@ -189,7 +199,11 @@ export const countries: Country[] = [
     code: "fi",
     name: "Suomi",
     englishName: "Finland",
-    languages: [english, { name: "Suomi", englishName: "Finnish" }, swedish],
+    languages: [
+      english,
+      { name: "Suomi", englishName: "Finnish", code: "fi" },
+      swedish,
+    ],
   },
   {
     code: "se",
@@ -210,3 +224,24 @@ export const countries: Country[] = [
     languages: [english, spanish],
   },
 ];
+
+export const DEFAULT_COUNTRY = countries.find((c) => c.code === "us")!;
+
+export function countryByCode(code: string | undefined): Country {
+  return countries.find((c) => c.code === code) ?? DEFAULT_COUNTRY;
+}
+
+export function languageByCode(
+  country: Country,
+  code: string | undefined,
+): Language {
+  return country.languages.find((l) => l.code === code) ?? country.languages[0];
+}
+
+export function resolveLocale(country: Country, language: Language): string {
+  return `${language.code}-${country.code.toUpperCase()}`;
+}
+
+export function getCountriesCount() {
+  return countries.length;
+}

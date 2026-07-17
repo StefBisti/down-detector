@@ -50,11 +50,7 @@ export async function getHourlyReports(
       window.reduce((sum, x) => sum + x.reports, 0) / window.length,
     );
     return {
-      time: new Date(r.bucket).toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-        hour12: true,
-      }),
+      time: new Date(r.bucket).getTime(),
       reports: r.reports,
       baseline,
     };

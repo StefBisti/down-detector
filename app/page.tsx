@@ -1,15 +1,14 @@
 import InputService from "@/components/home-page/input-service";
 import ServicePreview from "@/components/home-page/service-preview";
 import { Separator } from "@/components/ui/separator";
-import { countries } from "@/lib/constants/countries";
 import { getReportSeries } from "@/lib/data/reports";
 import { getTrending } from "@/lib/data/searches";
 import { getServices } from "@/lib/data/services";
+import { getSelection } from "@/lib/locale";
 import Image from "next/image";
 
 export default async function Home() {
-  const countriesCount = countries.length;
-  const countryCode = "us";
+  const countriesCount = 21332;
 
   const [services, previews] = await Promise.all([
     getServices(),
@@ -17,6 +16,8 @@ export default async function Home() {
   ]);
   const trending = previews.slice(0, 4);
   const series = await getReportSeries(previews.map((p) => p.id));
+
+  const { locale } = await getSelection();
 
   return (
     <div className="mb-20 px-4 md:px-20 flex flex-col items-center relative overflow-x-clip">
@@ -44,14 +45,15 @@ export default async function Home() {
       <div className="mt-12 flex flex-row gap-10">
         <div className="flex flex-col items-center">
           <p className="text-xl font-bold">
-            {/* {services.length.toLocaleString(countryCode)} */}
-            {(23456).toLocaleString(countryCode)}
+            {services.length.toLocaleString(locale)}
           </p>
           <p className="text-lg">services</p>
         </div>
         <Separator orientation="vertical" className="w-px bg-foreground" />
         <div className="flex flex-col items-center">
-          <p className="text-xl font-bold">{countriesCount}</p>
+          <p className="text-xl font-bold">
+            {countriesCount.toLocaleString(locale)}
+          </p>
           <p className="text-lg">countries</p>
         </div>
       </div>
