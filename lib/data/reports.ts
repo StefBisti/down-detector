@@ -13,13 +13,13 @@ export async function getReportSeries(
     select s.id as service_id, count(r.id)::int as reports
     from services s
     cross join generate_series(
-      date_bin('${BUCKET_INTERVAL}', now() - interval '24 hours', timestamptz 'epoch'),
-      date_bin('${BUCKET_INTERVAL}', now(), timestamptz 'epoch'),
-      interval '${BUCKET_INTERVAL}'
+      date_bin(${BUCKET_INTERVAL}::interval, now() - interval '24 hours', timestamptz 'epoch'),
+      date_bin(${BUCKET_INTERVAL}::interval, now(), timestamptz 'epoch'),
+      ${BUCKET_INTERVAL}::interval
     ) as b(bucket)
     left join reports r
       on r.service_id = s.id
-      and date_bin('${BUCKET_INTERVAL}', r.posted_at, timestamptz 'epoch') = b.bucket
+      and date_bin(${BUCKET_INTERVAL}::interval, r.posted_at, timestamptz 'epoch') = b.bucket
     where s.id = any(${serviceIds}::int[])
     group by s.id, b.bucket
     order by s.id, b.bucket`) as { service_id: number; reports: number }[];
@@ -35,13 +35,13 @@ export async function getHourlyReports(
   const rows = (await sql`
     select bucket, count(r.id)::int as reports
     from generate_series(
-      date_bin('${BUCKET_INTERVAL}', now() - interval '24 hours', timestamptz 'epoch'),
-      date_bin('${BUCKET_INTERVAL}', now(), timestamptz 'epoch'),
-      interval '${BUCKET_INTERVAL}'
+      date_bin(${BUCKET_INTERVAL}::interval, now() - interval '24 hours', timestamptz 'epoch'),
+      date_bin(${BUCKET_INTERVAL}::interval, now(), timestamptz 'epoch'),
+      ${BUCKET_INTERVAL}::interval
     ) as bucket
     left join reports r
       on r.service_id = ${serviceId}
-      and date_bin('${BUCKET_INTERVAL}', r.posted_at, timestamptz 'epoch') = bucket
+      and date_bin(${BUCKET_INTERVAL}::interval, r.posted_at, timestamptz 'epoch') = bucket
     group by bucket
     order by bucket`) as { bucket: Date; reports: number }[];
 
